@@ -1,0 +1,16 @@
+ <section id="content" class="m-2 container-large">
+      <div class="organizations p-2 right-border">
+         <div class="heading">
+            <span class="fas fa-code-branch"></span>
+            <h3>Organizations</h3>
+         </div>
+
+         <div class="my-3">
+            <h4>&star; DevsHelpDevs</h4>
+            <h5>Author: Thomas Burchalkwa</h5>
+            <h5>Role: Contributor/Member</h5>
+         </div>
+
+         <h4 class="my-3">ETC.</h4>
+      </div>
+   
