@@ -1,5 +1,32 @@
-<h1>Resume and App<h1><img align="right" src="https://resumevcc.vercel.app/" width="60px">
+# Personal Resume Website
 
-<img width="797" alt="Screenshot 2025-04-18 at 10 34 49 PM" src="https://github.com/user-attachments/assets/8078b358-7f77-4681-ad89-8113d10ef928" />
+This is a personal resume website for V Chaitanya Chowdari, showcasing his skills, experience, and projects.
 
+## Project Overview
 
+The website is a static site built with HTML and CSS. It is designed to be a clean, modern, and professional online resume.
+
+## Features
+
+*   **Responsive Design:** The website is fully responsive and works on all devices, from mobile phones to desktops.
+*   **Modern UI/UX:** The website has a clean and modern design, with a focus on readability and user experience.
+*   **Font Awesome Icons:** The website uses Font Awesome for icons.
+
+## Setup and Installation
+
+To run this project locally, you can simply open the `index.html` file in your web browser. There are no special dependencies or build steps required.
+
+## Deployment
+
+This website is a static site, so it can be deployed to any static hosting provider, such as:
+
+*   GitHub Pages
+*   Netlify
+*   Vercel
+*   AWS S3
+
+To deploy the website, you can simply upload the contents of this repository to your hosting provider.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
