@@ -1,10 +1,40 @@
-export const profile = {
+import heroImage from '@assets/images/logo.png'
+import type { IconName } from '@components/icons'
+
+export interface Profile {
+  name: string
+  title: string
+  email: string
+  description: string
+  image: string
+  imageAlt: string
+  cta: {
+    label: string
+    href: string
+    icon: IconName
+  }
+  social: {
+    github: string
+    twitter: string
+    linkedin: string
+    portfolio: string
+  }
+}
+
+export const profile: Profile = {
   name: 'V Chaitanya Chowdari',
   title: 'AI Generilist | AI Automation Expert | AI Agents Builder',
   email: 'vchaitanya@chowdari.in',
   description:
     "I'm a creative technologist and designer, passionate about turning ideas into immersive digital experiences. I blend technical precision with artistic vision to build innovative solutions that stand out. Always driven by curiosity, I continuously explore new technologies, refine my craft, and push creative boundaries to deliver work that speaks for itself.",
-  image: '/src/assets/images/logo.png',
+  image: heroImage,
+  imageAlt:
+    'V Chaitanya Chowdari - AI Generalist, Automation Expert, and Full Stack Developer',
+  cta: {
+    label: 'Download PDF',
+    href: '#',
+    icon: 'download',
+  },
   social: {
     github: 'https://github.com/vchaitanyachowdari',
     twitter: 'https://x.com/vchaitanyachai?s=11',
