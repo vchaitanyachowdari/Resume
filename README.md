@@ -1,242 +1,340 @@
-# Personal Resume Website
+# Personal Resume Website - React + Vite + TypeScript
 
-This is a personal resume website for V Chaitanya Chowdari, showcasing his skills, experience, and projects.
+Modern personal resume website for V Chaitanya Chowdari, built with React, Vite, and TypeScript. This application showcases skills, experience, projects, and professional background with a focus on AI, automation, and full-stack development.
 
 <img width="1470" height="800" alt="Screenshot 2025-09-20 at 7 14 12 PM" src="https://github.com/user-attachments/assets/966cce0a-fe79-4298-b0fa-8892224acd71" />
 
-## Project Overview
+## 🚀 Quick Start
 
-The website is a static site built with HTML and CSS. It is designed to be a clean, modern, and professional online resume with comprehensive SEO optimization for maximum search engine visibility and social sharing effectiveness.
+### Prerequisites
 
-## Features
+- Node.js 18.x or higher
+- npm 9.x or higher
 
-*   **Responsive Design:** The website is fully responsive and works on all devices, from mobile phones to desktops.
-*   **Modern UI/UX:** The website has a clean and modern design, with a focus on readability and user experience.
-*   **Font Awesome Icons:** The website uses Font Awesome for icons.
-*   **Contemporary Design System:** Built with a comprehensive design token system including modern colors, fluid typography, and consistent spacing.
-*   **Smooth Transitions:** Enhanced user experience with subtle animations and hover effects.
-*   **Accessibility:** WCAG AA compliant color contrast ratios and keyboard navigation support.
+### Installation
 
-## Design System
+```bash
+# Install dependencies
+npm install
 
-The website implements a modern design token system documented in the CSS file. Key components include:
+# Start development server
+npm run dev
 
-### Color Palette
-- **Primary Colors:** Slate blue scale from `#0f172a` to `#f8fafc` for neutral hierarchy
-- **Accent Colors:** Blue (`#3b82f6`), Purple (`#8b5cf6`), and Cyan (`#06b6d4`) for interactive elements
-- **Semantic Colors:** Predefined tokens for text, backgrounds, and borders ensuring consistency
+# Build for production
+npm run build
 
-### Typography Scale
-Uses `clamp()` for fluid responsive font sizing:
-- **Font Sizes:** From `xs` (0.75-0.875rem) to `4xl` (2.25-3rem)
-- **Font Weights:** Light (300), Regular (400), Medium (500), Semibold (600), Bold (700)
-- **Line Heights:** Tight (1.25) to Loose (2) for optimal readability
-- **Letter Spacing:** From tight (-0.025em) to widest (0.1em) for hierarchy
+# Preview production build
+npm run preview
+```
 
-### Spacing System
-4/8px based spacing scale using CSS custom properties:
-- **Scale:** `--space-1` (4px) through `--space-24` (96px)
-- **Consistent Rhythm:** Applied uniformly across padding, margins, and gaps
+The development server will start at `http://localhost:5173/`
 
-### Visual Components
-- **Shadows:** Layered depth system from `xs` to `2xl` for card elevation
-- **Border Radius:** From `sm` (0.25rem) to `full` (9999px) for modern rounded corners
-- **Transitions:** Cubic-bezier easing functions for smooth animations (150-500ms)
-- **Gradients:** Subtle gradients on hero section, buttons, and interactive elements
+## 📁 Project Structure
 
-### Component Styles
-- **Hero Section:** Gradient background with animated pulse effect
-- **Cards:** Elevated sections with hover states and visual depth
-- **Buttons:** Gradient-filled with overlay effects and transform animations
-- **Skills Badges:** Pill-shaped with gradient hover states
-- **Job Cards:** Left-bordered with slide-in hover effects
-- **Social Links:** Icon buttons with gradient fills on hover
+```
+├── public/              # Static assets (favicon, manifest, robots.txt)
+├── src/
+│   ├── assets/         # Dynamic assets (fonts, images)
+│   │   ├── fonts/      # Proxima Nova font family
+│   │   └── images/     # Profile images and logos
+│   ├── components/     # Reusable React components
+│   │   └── icons/      # Icon barrel exports (react-icons)
+│   ├── context/        # React Context providers
+│   ├── data/           # Data models and constants
+│   │   ├── profile.ts  # Personal information and SEO data
+│   │   ├── experience.ts  # Work experience data
+│   │   ├── skills.ts   # Technical and soft skills
+│   │   ├── education.ts   # Educational background
+│   │   └── projects.ts # Portfolio projects
+│   ├── hooks/          # Custom React hooks
+│   ├── sections/       # Page sections (Hero, Experience, Projects, etc.)
+│   ├── styles/         # Global styles and design tokens
+│   │   ├── fonts.css   # @font-face declarations
+│   │   └── global.css  # CSS custom properties and resets
+│   ├── App.tsx         # Main application component
+│   ├── main.tsx        # Application entry point
+│   └── vite-env.d.ts   # Vite TypeScript declarations
+├── index.html          # HTML entry point
+├── vite.config.ts      # Vite configuration with path aliases
+├── tsconfig.json       # TypeScript configuration
+├── eslint.config.js    # ESLint configuration
+├── .prettierrc         # Prettier configuration
+└── package.json        # Dependencies and scripts
+```
 
-### Accessibility Features
-- **Color Contrast:** All text meets WCAG AA standards (4.5:1 for normal text, 3:1 for large text)
-  - Primary Text (#1e293b) on White: 14.63:1
-  - Secondary Text (#475569) on White: 7.58:1
-  - Accent Blue (#2563eb) on White: 5.17:1
-  - Accent Purple (#7c3aed) on White: 5.70:1
-  - White on Dark Backgrounds: 17.85:1
-- **Focus States:** Visible outlines on all interactive elements
-- **Reduced Motion:** Respects `prefers-reduced-motion` user preference
-- **Semantic HTML:** Proper heading hierarchy and ARIA-friendly markup
-- **Keyboard Navigation:** All interactive elements are keyboard accessible
+## 🛠️ Technology Stack
 
-## Maintenance Guidelines
+### Core Framework
 
-### Adding New Colors
-When adding new colors to the design system:
-1. Ensure contrast ratios meet WCAG AA (4.5:1 for normal text, 3:1 for large text)
-2. Define colors as CSS custom properties in the `:root` section
-3. Use semantic naming (e.g., `--color-accent-*`, `--color-text-*`)
+- **React 18.3** - UI library with hooks and concurrent features
+- **TypeScript 5.6** - Type-safe JavaScript
+- **Vite 6.0** - Fast build tool with HMR
 
-### Modifying Typography
-- Use the existing `clamp()` functions for fluid responsive sizing
-- Maintain the established scale ratios for visual hierarchy
-- Test on multiple screen sizes (mobile, tablet, desktop)
+### Routing & State Management
 
-### Updating Spacing
-- Follow the 4/8px spacing scale (`--space-*` variables)
-- Use consistent spacing tokens across all components
-- Avoid hard-coded values; always use CSS custom properties
+- **React Router DOM 7.1** - Client-side routing
+- **@tanstack/react-query 5.62** - Server state management (ready for API integration)
+- **React Context** - Global state management
 
-## Setup and Installation
+### UI & Animation
 
-To run this project locally, you can simply open the `index.html` file in your web browser. There are no special dependencies or build steps required.
+- **Framer Motion 11.15** - Production-ready animation library
+- **React Icons 5.4** - Tree-shakeable icon library (replacing Font Awesome CDN)
+- **CSS Modules** - Scoped component styles
+- **PostCSS + Autoprefixer** - CSS processing and vendor prefixes
 
-## Deployment
+### Forms & Validation
 
-This website is a static site, so it can be deployed to any static hosting provider, such as:
+- **React Hook Form 7.54** - Performant form library
+- **Zod 3.24** - TypeScript-first schema validation
 
-*   GitHub Pages
-*   Netlify
-*   Vercel
-*   AWS S3
+### Meta Tags & SEO
 
-To deploy the website, you can simply upload the contents of this repository to your hosting provider.
+- **React Helmet Async 2.0** - Manage document head (title, meta tags, etc.)
 
-## SEO Configuration
+### Code Quality
 
-This website includes comprehensive SEO optimization to maximize search engine visibility and social media sharing effectiveness.
+- **ESLint 9.17** - Linting with React/TypeScript rules
+- **Prettier 3.4** - Code formatting
+- **Husky 9.1** - Git hooks
+- **lint-staged 15.3** - Pre-commit linting
 
-### What's Included
+## 🎨 Design System
 
-#### 1. **Primary Meta Tags**
-*   **Title:** Optimized with primary keywords (AI Generalist, Automation Expert, Full Stack Developer)
-*   **Meta Description:** Compelling 155-character description highlighting key expertise and accomplishments
-*   **Keywords:** Comprehensive list of relevant technical skills and specializations
-*   **Robots Directive:** Set to `index, follow` for maximum search engine crawling
-*   **Language:** Specified as English
-*   **Canonical URL:** Set to prevent duplicate content issues
+### CSS Custom Properties
 
-#### 2. **Open Graph Meta Tags (Facebook, LinkedIn)**
-*   **og:type:** Set to `profile` for person/professional pages
-*   **og:title:** SEO-optimized title for social sharing
-*   **og:description:** Engaging description for social previews
-*   **og:image:** Profile image with proper dimensions (1200x630 recommended)
-*   **og:url:** Canonical URL of the resume page
-*   **profile:first_name & profile:last_name:** Structured name data
+The application uses a comprehensive design token system defined in `src/styles/global.css`:
 
-#### 3. **Twitter Card Meta Tags**
-*   **twitter:card:** Set to `summary_large_image` for prominent visual display
-*   **twitter:creator:** Twitter handle (@vchaitanyachai)
-*   **twitter:title:** Optimized title for Twitter sharing
-*   **twitter:description:** Concise description for tweets
-*   **twitter:image:** Profile image with descriptive alt text
+#### Color Palette
 
-#### 4. **JSON-LD Structured Data (Schema.org)**
-The website implements comprehensive `Person` schema including:
-*   **Basic Information:** Name, job titles, description, contact details
-*   **Education:** Alumni information from IIT Indore, 100x Engineers, and BIET
-*   **Skills:** Complete list of technical skills and expertise areas
-*   **Languages:** Spoken languages (English, Telugu, Hindi, Kannada)
-*   **Social Profiles:** Links to GitHub, Twitter/X, LinkedIn, and portfolio sites (sameAs property)
-*   **Work Organizations:** Current roles and companies (worksFor property)
-*   **Credentials:** Educational certificates and professional qualifications
+```css
+/* Primary (Slate) */
+--color-primary-900 to --color-primary-50
 
-This structured data helps search engines better understand the content and can enable rich results in search listings.
+/* Accent Colors */
+--color-accent-primary: #2563eb (Blue)
+--color-accent-secondary: #7c3aed (Purple)
+--color-accent-tertiary: #0e7490 (Cyan)
+```
 
-#### 5. **Semantic HTML Structure**
-*   **Heading Hierarchy:** Logical structure (h1 → h2 → h3 → h4 → h5) for accessibility and SEO
-*   **Alt Text:** Descriptive alternative text for all images
-*   **Language Attribute:** `lang="en"` on HTML tag
-*   **Semantic Elements:** Proper use of `<header>`, `<main>`, `<aside>`, `<section>`, and `<footer>`
+#### Typography Scale
 
-### How to Maintain SEO
+- Fluid responsive sizing using `clamp()`
+- Font sizes: `xs` (0.75rem) to `4xl` (3rem)
+- Font family: Proxima Nova (locally hosted)
 
-When updating the website, follow these guidelines to maintain SEO effectiveness:
+#### Spacing System
 
-#### Updating Personal Information
-1. **Update Meta Tags:** If you change your job title or expertise, update:
-   *   `<title>` tag
-   *   `meta name="title"`
-   *   `meta name="description"`
-   *   `meta name="keywords"`
-   *   Open Graph tags (`og:title`, `og:description`)
-   *   Twitter Card tags (`twitter:title`, `twitter:description`)
+- 4/8px based scale: `--space-1` (4px) to `--space-16` (64px)
 
-2. **Update JSON-LD Schema:** Modify the structured data script to reflect:
-   *   New job titles in `jobTitle` array
-   *   New skills in `knowsAbout` array
-   *   New education entries in `alumniOf` array
-   *   New organizations in `worksFor` array
-   *   Updated social profiles in `sameAs` array
+#### Shadows, Borders & Transitions
 
-#### Changing Images
-1. Update the image URL in:
-   *   `og:image` meta tag
-   *   `twitter:image` meta tag
-   *   JSON-LD `image` property
-2. Ensure images are:
-   *   At least 1200x630 pixels for optimal social sharing
-   *   Compressed for fast loading
-   *   Have descriptive alt text
+- Layered shadow system (`xs` to `xl`)
+- Border radius tokens (`sm` to `full`)
+- Cubic-bezier easing functions
 
-#### Adding New Content
-1. **Maintain Heading Hierarchy:** Use headings in order (h1 → h2 → h3, etc.)
-2. **Add Alt Text:** Include descriptive alt text for all new images
-3. **Update Keywords:** Add relevant new skills or technologies to meta keywords
-4. **Update Structured Data:** Add new accomplishments, skills, or credentials to JSON-LD
+### Accessibility
 
-#### Canonical URL
-*   The canonical URL is currently set to `https://www.chowdari.in/resume`
-*   If you deploy to a different domain, update:
-    *   `<link rel="canonical" href="...">`
-    *   `og:url` meta tag
-    *   `twitter:url` meta tag
-    *   JSON-LD `url` property
+- WCAG AA compliant color contrast ratios
+- Keyboard navigation support
+- Respects `prefers-reduced-motion`
+- Semantic HTML structure
 
-### Testing Your SEO
+## 🔧 Development
 
-Use these tools to validate your SEO implementation:
+### Available Scripts
 
-1. **Google Rich Results Test:** https://search.google.com/test/rich-results
-   *   Validates JSON-LD structured data
-   *   Shows preview of how Google might display your page
+```bash
+# Development
+npm run dev              # Start dev server with HMR
+npm run build           # Type-check and build for production
+npm run preview         # Preview production build locally
 
-2. **Facebook Sharing Debugger:** https://developers.facebook.com/tools/debug/
-   *   Tests Open Graph tags
-   *   Shows preview of Facebook/LinkedIn posts
+# Code Quality
+npm run lint            # Run ESLint
+npm run lint:fix        # Fix ESLint errors
+npm run format          # Format code with Prettier
+npm run format:check    # Check code formatting
+npm run type-check      # Run TypeScript compiler (no emit)
+```
 
-3. **Twitter Card Validator:** https://cards-dev.twitter.com/validator
-   *   Tests Twitter Card implementation
-   *   Shows preview of Twitter posts
+### Path Aliases
 
-4. **SEO Site Checkup:** https://seositecheckup.com/
-   *   Comprehensive SEO audit
-   *   Identifies improvement opportunities
+The project uses TypeScript path aliases configured in `tsconfig.json` and `vite.config.ts`:
 
-5. **Schema Markup Validator:** https://validator.schema.org/
-   *   Validates JSON-LD structured data syntax
-   *   Checks Schema.org compliance
+```typescript
+import { profile } from '@data/profile'
+import Icon from '@components/icons'
+import '@styles/global.css'
+```
 
-### Best Practices
+Available aliases:
 
-1. **Keep Content Updated:** Regularly update your resume with new skills and experiences
-2. **Monitor Performance:** Use Google Search Console to track search performance
-3. **Optimize Images:** Compress images to maintain fast loading times
-4. **Mobile-First:** Ensure all changes work well on mobile devices
-5. **Consistent NAP:** Keep Name, Address, Phone consistent across all platforms
-6. **Fresh Content:** Update content regularly to signal active maintenance to search engines
-7. **Internal Links:** Link to your portfolio and projects for better site structure
-8. **External Validation:** Encourage social shares and backlinks to improve authority
+- `@/*` → `./src/*`
+- `@components/*` → `./src/components/*`
+- `@sections/*` → `./src/sections/*`
+- `@data/*` → `./src/data/*`
+- `@styles/*` → `./src/styles/*`
+- `@assets/*` → `./src/assets/*`
+- `@hooks/*` → `./src/hooks/*`
+- `@context/*` → `./src/context/*`
 
-### Common Issues and Solutions
+### Icon Usage
 
-**Issue:** Changes not reflected in social media previews
-*   **Solution:** Use the Facebook and Twitter debugging tools to clear cache
+Icons are managed through a barrel export in `src/components/icons/index.tsx`:
 
-**Issue:** Structured data validation errors
-*   **Solution:** Use Google Rich Results Test and Schema Markup Validator to identify errors
+```tsx
+import Icon from '@components/icons'
 
-**Issue:** Images not showing in previews
-*   **Solution:** Ensure image URLs are absolute (include full domain) and publicly accessible
+;<Icon name="github" size={24} aria-label="GitHub Profile" />
+```
 
-**Issue:** Duplicate content warnings
-*   **Solution:** Ensure canonical URL is correctly set and consistent
+This replaces the Font Awesome CDN with tree-shaken `react-icons/fa` imports.
 
-## License
+## 📦 Build & Deployment
+
+### Production Build
+
+```bash
+npm run build
+```
+
+Outputs to `dist/` directory with:
+
+- Minified JavaScript (ESBuild)
+- Code splitting (React vendor, animations, forms)
+- Optimized CSS with vendor prefixes
+- Font files and images in `dist/assets/`
+
+### Deployment Targets
+
+The build output is compatible with:
+
+- **GitHub Pages** - Set `base: './'` in `vite.config.ts` (already configured)
+- **Netlify** - Drag & drop `dist/` folder or connect Git repo
+- **Vercel** - Import project and set build command to `npm run build`
+- **AWS S3** - Upload `dist/` contents to bucket
+- **Any static hosting** - Serve `dist/` folder
+
+### GitHub Pages Deployment
+
+1. Build the project: `npm run build`
+2. Deploy the `dist/` folder to `gh-pages` branch
+3. Configure GitHub Pages to serve from `gh-pages` branch
+
+Or use GitHub Actions workflow (see `.github/workflows/`)
+
+## 🔍 SEO Configuration
+
+### Meta Tags
+
+Managed via `react-helmet-async` with data from `src/data/profile.ts`:
+
+- Primary meta tags (title, description, keywords)
+- Open Graph tags (Facebook, LinkedIn)
+- Twitter Card tags
+- Canonical URL
+- Structured data (JSON-LD Schema.org)
+
+### Robots & Sitemap
+
+- `robots.txt` in `public/`
+- Consider adding `sitemap.xml` for better indexing
+
+## 🎯 Migration Notes
+
+This project was migrated from a static HTML/CSS website to a React + Vite application:
+
+### What Was Migrated
+
+✅ All static assets (fonts, images, favicon)  
+✅ Design system (CSS custom properties)  
+✅ Content data (experience, skills, education, projects)  
+✅ SEO metadata and structured data  
+✅ Responsive design system
+
+### What Changed
+
+- **Font Awesome CDN** → Tree-shaken `react-icons`
+- **Single HTML file** → Component-based architecture
+- **Inline styles/CSS** → CSS Modules + global design tokens
+- **No build step** → Vite build with HMR and optimizations
+
+### Legacy Files
+
+- `index-old.html` - Original static HTML file (preserved for reference)
+- `css/new_style.css` - Original stylesheet (design tokens migrated to `src/styles/`)
+- `README-old.md` - Previous README (design system documentation)
+
+## 🧪 Testing
+
+Currently, the project does not include a testing framework. Consider adding:
+
+- **Vitest** - Unit testing (Vite-native)
+- **React Testing Library** - Component testing
+- **Playwright** or **Cypress** - E2E testing
+
+## 📝 Code Style & Conventions
+
+### TypeScript
+
+- Strict mode enabled
+- Explicit return types for exported functions
+- Interface for props, type for unions/primitives
+
+### React
+
+- Functional components with hooks
+- PascalCase for components
+- camelCase for functions/variables
+- Avoid default exports (except for page components)
+
+### CSS
+
+- Use CSS custom properties for design tokens
+- BEM-like naming for classes
+- CSS Modules for component-specific styles
+- Mobile-first responsive design
+
+### File Naming
+
+- Components: `PascalCase.tsx`
+- Utilities/Hooks: `camelCase.ts`
+- Styles: `kebab-case.css` or `PascalCase.module.css`
+
+## 🤝 Contributing
+
+When contributing, ensure:
+
+1. Code passes ESLint: `npm run lint`
+2. Code is formatted: `npm run format`
+3. TypeScript compiles: `npm run type-check`
+4. Build succeeds: `npm run build`
+
+Git hooks (via Husky + lint-staged) enforce these checks on commit.
+
+## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+## 👤 Author
+
+**V Chaitanya Chowdari**  
+AI Generalist | AI Automation Expert | AI Agents Builder
+
+- 🌐 Portfolio: [chowdari.in](https://www.chowdari.in)
+- 💼 LinkedIn: [v-chaitanya-chowdari](https://www.linkedin.com/in/v-chaitanya-chowdari-bb3733202)
+- 🐙 GitHub: [vchaitanyachowdari](https://github.com/vchaitanyachowdari)
+- 🐦 Twitter: [@vchaitanyachai](https://x.com/vchaitanyachai)
+- 📧 Email: vchaitanya@chowdari.in
+
+---
+
+**Note**: This is the initial React foundation setup. Future development will include:
+
+- Component implementation for all resume sections
+- Page routing and navigation
+- Animations with Framer Motion
+- Contact form with validation
+- Dark mode theme toggle
+- Performance optimizations
