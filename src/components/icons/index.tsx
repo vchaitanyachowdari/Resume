@@ -14,8 +14,6 @@ import {
   FaSuitcase,
   FaCode,
   FaDownload,
-  FaAward,
-  FaInfoCircle,
 } from 'react-icons/fa'
 
 const icons = {
@@ -34,8 +32,6 @@ const icons = {
   suitcase: FaSuitcase,
   code: FaCode,
   download: FaDownload,
-  award: FaAward,
-  info: FaInfoCircle,
 }
 
 export type IconName = keyof typeof icons

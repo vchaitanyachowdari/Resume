@@ -5,12 +5,6 @@ export interface Project {
   description: string
 }
 
-export interface OtherProject {
-  id: string
-  title: string
-  url?: string
-}
-
 export const projects: Project[] = [
   {
     id: 'portfolio-ideas',
@@ -42,11 +36,11 @@ export const projects: Project[] = [
   },
 ]
 
-export const otherProjects: OtherProject[] = [
-  { id: 'coding-agents', title: 'Coding Agents', url: '#' },
-  { id: 'prompt-enhancer', title: 'Prompt Enhancer', url: '#' },
-  { id: 'job-search-agent', title: 'Job search agent', url: '#' },
-  { id: 'blog-content-agent', title: 'Blog Contant Creation Agent', url: '#' },
-  { id: 'seo-automation', title: 'SEO Optimisation Automation', url: '#' },
-  { id: 'content-automation', title: 'Contant Creation Automation', url: '#' },
+export const otherProjects = [
+  { title: 'Coding Agents', url: '#' },
+  { title: 'Prompt Enhancer', url: '#' },
+  { title: 'Job search agent', url: '#' },
+  { title: 'Blog Contant Creation Agent', url: '#' },
+  { title: 'SEO Optimisation Automation', url: '#' },
+  { title: 'Contant Creation Automation', url: '#' },
 ]
