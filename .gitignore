@@ -8,6 +8,10 @@
 # Log files
 *.log
 
+# Performance audit reports
+lighthouse-*.html
+lighthouse-*.json
+
 # OS-specific files
 .DS_Store
 Thumbs.db

@@ -13,78 +13,62 @@ The website is a static site built with HTML and CSS. It is designed to be a cle
 *   **Responsive Design:** The website is fully responsive and works on all devices, from mobile phones to desktops.
 *   **Modern UI/UX:** The website has a clean and modern design, with a focus on readability and user experience.
 *   **Font Awesome Icons:** The website uses Font Awesome for icons.
-*   **Contemporary Design System:** Built with a comprehensive design token system including modern colors, fluid typography, and consistent spacing.
-*   **Smooth Transitions:** Enhanced user experience with subtle animations and hover effects.
-*   **Accessibility:** WCAG AA compliant color contrast ratios and keyboard navigation support.
+*   **Performance Optimized:** Implements modern web performance best practices for fast loading.
 
-## Design System
+## Performance Optimizations
 
-The website implements a modern design token system documented in the CSS file. Key components include:
+This website has been optimized for maximum performance with the following techniques:
 
-### Color Palette
-- **Primary Colors:** Slate blue scale from `#0f172a` to `#f8fafc` for neutral hierarchy
-- **Accent Colors:** Blue (`#3b82f6`), Purple (`#8b5cf6`), and Cyan (`#06b6d4`) for interactive elements
-- **Semantic Colors:** Predefined tokens for text, backgrounds, and borders ensuring consistency
+### Image Optimization
+- **97.84% size reduction** on profile image (318 KB → 6.86 KB)
+- Modern image formats (AVIF, WebP) with PNG fallback
+- Responsive images with 2x resolution for retina displays
+- Lazy loading for below-the-fold images
+- Explicit width/height attributes to prevent layout shifts
 
-### Typography Scale
-Uses `clamp()` for fluid responsive font sizing:
-- **Font Sizes:** From `xs` (0.75-0.875rem) to `4xl` (2.25-3rem)
-- **Font Weights:** Light (300), Regular (400), Medium (500), Semibold (600), Bold (700)
-- **Line Heights:** Tight (1.25) to Loose (2) for optimal readability
-- **Letter Spacing:** From tight (-0.025em) to widest (0.1em) for hierarchy
+### Font Loading
+- Critical fonts preloaded for faster render
+- `font-display: swap` to prevent invisible text during font loading
+- Relative font paths for better caching
+- Only essential font weights loaded
 
-### Spacing System
-4/8px based spacing scale using CSS custom properties:
-- **Scale:** `--space-1` (4px) through `--space-24` (96px)
-- **Consistent Rhythm:** Applied uniformly across padding, margins, and gaps
+### CSS Optimization
+- Critical CSS inlined (1.9 KB) for instant above-the-fold render
+- Non-critical CSS loaded asynchronously
+- Minified CSS bundle (25% size reduction)
+- CSS containment (`content-visibility`) for improved rendering performance
 
-### Visual Components
-- **Shadows:** Layered depth system from `xs` to `2xl` for card elevation
-- **Border Radius:** From `sm` (0.25rem) to `full` (9999px) for modern rounded corners
-- **Transitions:** Cubic-bezier easing functions for smooth animations (150-500ms)
-- **Gradients:** Subtle gradients on hero section, buttons, and interactive elements
+### Resource Loading
+- Font Awesome loaded asynchronously to prevent render blocking
+- DNS prefetch and preconnect for external resources
+- Noscript fallbacks for accessibility
 
-### Component Styles
-- **Hero Section:** Gradient background with animated pulse effect
-- **Cards:** Elevated sections with hover states and visual depth
-- **Buttons:** Gradient-filled with overlay effects and transform animations
-- **Skills Badges:** Pill-shaped with gradient hover states
-- **Job Cards:** Left-bordered with slide-in hover effects
-- **Social Links:** Icon buttons with gradient fills on hover
+### Expected Performance
+- **Lighthouse Score:** 90+ (desktop), 85+ (mobile)
+- **Image Savings:** ~310 KB per page load
+- **Faster First Contentful Paint (FCP)**
+- **Improved Largest Contentful Paint (LCP)**
+- **Reduced Cumulative Layout Shift (CLS)**
 
-### Accessibility Features
-- **Color Contrast:** All text meets WCAG AA standards (4.5:1 for normal text, 3:1 for large text)
-  - Primary Text (#1e293b) on White: 14.63:1
-  - Secondary Text (#475569) on White: 7.58:1
-  - Accent Blue (#2563eb) on White: 5.17:1
-  - Accent Purple (#7c3aed) on White: 5.70:1
-  - White on Dark Backgrounds: 17.85:1
-- **Focus States:** Visible outlines on all interactive elements
-- **Reduced Motion:** Respects `prefers-reduced-motion` user preference
-- **Semantic HTML:** Proper heading hierarchy and ARIA-friendly markup
-- **Keyboard Navigation:** All interactive elements are keyboard accessible
-
-## Maintenance Guidelines
-
-### Adding New Colors
-When adding new colors to the design system:
-1. Ensure contrast ratios meet WCAG AA (4.5:1 for normal text, 3:1 for large text)
-2. Define colors as CSS custom properties in the `:root` section
-3. Use semantic naming (e.g., `--color-accent-*`, `--color-text-*`)
-
-### Modifying Typography
-- Use the existing `clamp()` functions for fluid responsive sizing
-- Maintain the established scale ratios for visual hierarchy
-- Test on multiple screen sizes (mobile, tablet, desktop)
-
-### Updating Spacing
-- Follow the 4/8px spacing scale (`--space-*` variables)
-- Use consistent spacing tokens across all components
-- Avoid hard-coded values; always use CSS custom properties
+For detailed performance metrics and analysis, see [PERFORMANCE.md](PERFORMANCE.md).
 
 ## Setup and Installation
 
 To run this project locally, you can simply open the `index.html` file in your web browser. There are no special dependencies or build steps required.
+
+### Running Performance Audits
+
+To run Lighthouse performance audits:
+
+```bash
+# Make the script executable (if not already)
+chmod +x run-lighthouse.sh
+
+# Run the audit
+./run-lighthouse.sh
+```
+
+This will generate HTML reports for both desktop and mobile performance metrics.
 
 ## Deployment
 
