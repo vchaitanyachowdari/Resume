@@ -40,3 +40,18 @@ export const softSkills: string[] = [
   'Honest and fun',
   'Enjoys working closely with others',
 ]
+
+export const skillCategories: SkillCategory[] = [
+  {
+    title: 'Tech Skills',
+    skills: techSkills,
+  },
+  {
+    title: 'Tools',
+    skills: tools,
+  },
+  {
+    title: 'Soft Skills',
+    skills: softSkills,
+  },
+]
