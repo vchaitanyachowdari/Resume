@@ -1,0 +1,15 @@
+{
+  "name": "resume-website",
+  "version": "1.0.0",
+  "description": "Personal resume website for V Chaitanya Chowdari",
+  "private": true,
+  "scripts": {
+    "optimize:images": "node optimize-images.js",
+    "optimize:css": "npx cleancss -o css/new_style.min.css css/new_style.css && npx cleancss -o css/critical.min.css css/critical.css",
+    "audit": "./run-lighthouse.sh"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "sharp": "^0.34.4"
+  }
+}

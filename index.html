@@ -6,20 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V Chaitanya Chowdari | Resume</title>
-    <link rel="stylesheet" href="css/new_style.css">
-
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="font/Proxima Nova Alt Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="font/Proxima Nova Alt Bold.otf" as="font" type="font/otf" crossorigin>
+    
+    <!-- Critical CSS inlined for faster render -->
+    <style>:root{--primary-color:#2c3e50;--secondary-color:#e74c3c;--text-primary-color:#34495e;--text-secondary-color:#2c3e50;--bg-primary-color:#ecf0f1;--bg-secondary-color:#bdc3c7;--border-color:#e0e0e0}*{margin:0;padding:0;box-sizing:border-box}@font-face{font-family:'Proxima Nova';src:url('font/Proxima Nova Alt Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:'Proxima Nova';src:url('font/Proxima Nova Alt Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}body{font-family:'Proxima Nova',sans-serif;background-color:var(--bg-primary-color);color:var(--text-primary-color);font-size:1rem;line-height:1.6}.container{max-width:1200px;margin:0 auto;padding:0 20px}.resume{background-color:#fff;margin-top:2rem;margin-bottom:2rem;box-shadow:0 0 20px rgba(0,0,0,.1)}h1,h2,h3,h4,h5,h6{font-family:'Proxima Nova',sans-serif;font-weight:700;color:var(--text-secondary-color)}h1{font-size:2.5rem;margin-bottom:.5rem}h2{font-size:1.5rem;margin-bottom:1rem;font-weight:400}h3{font-size:1.2rem;margin-bottom:.5rem;color:var(--primary-color);text-transform:uppercase}h4{font-size:1.1rem;margin-bottom:.2rem;color:var(--secondary-color)}a{color:var(--primary-color);text-decoration:none}ul{list-style:none}.btn{display:inline-block;padding:.8rem 1.5rem;border-radius:5px;text-decoration:none;font-weight:700;text-align:center;transition:background-color .3s ease;margin-top:1rem}.btn-primary{background-color:var(--primary-color);color:#fff}.hero{padding:2rem;text-align:center;border-bottom:1px solid var(--border-color)}.profile-img{width:150px;height:150px;border-radius:50%;margin:0 auto 1.5rem}.social{display:flex;justify-content:center;margin-top:1.5rem}.social li{margin:0 .5rem}.social a{font-size:1.5rem}.content-grid{display:grid;grid-template-columns:1fr 2fr;gap:2rem;padding:2rem}</style>
+    
+    <!-- Load full CSS asynchronously -->
+    <link rel="preload" href="css/new_style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/new_style.min.css"></noscript>
+    
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="favicon/site.webmanifest">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Load Font Awesome asynchronously -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 </head>
 <body>
     <div class="container resume">
         <header class="hero">
-            <img src="images/logo.png" alt="Picture of V Chaitanya Chowdari" class="profile-img">
+            <picture>
+                <source srcset="images/logo.avif, images/logo@2x.avif 2x" type="image/avif">
+                <source srcset="images/logo.webp, images/logo@2x.webp 2x" type="image/webp">
+                <img src="images/logo-optimized.png" alt="Picture of V Chaitanya Chowdari" class="profile-img" width="150" height="150">
+            </picture>
             <h1>V Chaitanya Chowdari</h1>
             <h2>AI Generilist | AI Automation Expert | AI Agents Builder</h2>
             <p>I’m a creative technologist and designer, passionate about turning ideas into immersive digital experiences. I blend technical precision with artistic vision to build innovative solutions that stand out. Always driven by curiosity, I continuously explore new technologies, refine my craft, and push creative boundaries to deliver work that speaks for itself.</p>
@@ -53,13 +73,13 @@
                     </div>
                     <div class="company-logos">
                         <div class="logo-placeholder">
-                            <img src="images/company/" alt="Google" class="company-logo">
+                            <img src="images/company/" alt="Google" class="company-logo" loading="lazy" width="60" height="60">
                         </div>
                         <div class="logo-placeholder">
-                            <img src="images/company/" alt="Meta" class="company-logo">
+                            <img src="images/company/" alt="Meta" class="company-logo" loading="lazy" width="60" height="60">
                         </div>
                         <div class="logo-placeholder">
-                            <img src="images/company/" alt="Startup India" class="company-logo">
+                            <img src="images/company/" alt="Startup India" class="company-logo" loading="lazy" width="60" height="60">
                         </div>
                     </div>
                 </section>

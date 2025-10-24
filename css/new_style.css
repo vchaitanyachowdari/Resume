@@ -16,23 +16,26 @@
 
 @font-face {
     font-family: 'Proxima Nova';
-    src: url('/font/Proxima Nova Alt Light.otf') format('opentype');
+    src: url('../font/Proxima Nova Alt Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Proxima Nova';
-    src: url('/font/Proxima Nova Alt Regular.otf') format('opentype');
+    src: url('../font/Proxima Nova Alt Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Proxima Nova';
-    src: url('/font/Proxima Nova Alt Bold.otf') format('opentype');
+    src: url('../font/Proxima Nova Alt Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
+    font-display: swap;
 }
 
 body {
@@ -164,6 +167,8 @@ ul {
 
 .section {
     margin-bottom: 2rem;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
 }
 
 .section:last-child {
