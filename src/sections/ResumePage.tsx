@@ -23,18 +23,19 @@ import {
 import { seoData } from '@data/profile'
 import '@styles/resume.css'
 
-interface RouteParams {
+interface RouteParams extends Record<string, string | undefined> {
   sectionId?: string
 }
 
 export default function ResumePage() {
   const { sectionId } = useParams<RouteParams>()
   const navigate = useNavigate()
-  const [activeSection, setActiveSection] = useState<SectionId>(defaultSectionId)
+  const [activeSection, setActiveSection] =
+    useState<SectionId>(defaultSectionId)
 
   const targetSection = useMemo(
     () => (sectionId && isSectionId(sectionId) ? sectionId : undefined),
-    [sectionId],
+    [sectionId]
   )
 
   useEffect(() => {
@@ -101,10 +102,7 @@ export default function ResumePage() {
       <Helmet>
         <title>{seoData.title}</title>
         <meta name="description" content={seoData.description} />
-        <meta
-          name="keywords"
-          content={seoData.keywords.join(', ')}
-        />
+        <meta name="keywords" content={seoData.keywords.join(', ')} />
         <link rel="canonical" href={seoData.canonicalUrl} />
         <meta property="og:title" content={seoData.title} />
         <meta property="og:description" content={seoData.description} />
@@ -124,6 +122,7 @@ export default function ResumePage() {
           <CertificationsSection className="resume-grid__main" />
           <HobbiesSection className="resume-grid__sidebar" />
           <ContactSection className="resume-grid__full" />
+        </div>
 
         <FooterSection />
       </ResumeLayout>
