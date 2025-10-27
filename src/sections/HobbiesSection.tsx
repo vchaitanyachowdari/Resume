@@ -1,3 +1,4 @@
+import AnimatedSection from '@components/AnimatedSection'
 import BadgeList from '@components/BadgeList'
 import SectionHeader from '@components/SectionHeader'
 import { hobbies } from '@data/personal'
@@ -12,9 +13,13 @@ export default function HobbiesSection({ className }: HobbiesSectionProps) {
     .join(' ')
 
   return (
-    <section id="hobbies" className={classes} aria-labelledby="hobbies-heading">
+    <AnimatedSection
+      id="hobbies"
+      className={classes}
+      ariaLabelledby="hobbies-heading"
+    >
       <SectionHeader id="hobbies-heading" icon="puzzle" title="Hobbies" />
       <BadgeList items={hobbies} />
-    </section>
+    </AnimatedSection>
   )
 }

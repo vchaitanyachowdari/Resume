@@ -1,21 +1,38 @@
+import { motion } from 'framer-motion'
+import AnimatedSection from '@components/AnimatedSection'
 import SectionHeader from '@components/SectionHeader'
 import type { OtherProject, Project } from '@data/projects'
 import { otherProjects, projects } from '@data/projects'
+import { useReducedMotion } from '@hooks/useReducedMotion'
+import {
+  getReducedMotionVariants,
+  hoverScale,
+  staggerContainer,
+  staggerItem,
+} from '@utils/animations'
 
 interface ProjectsSectionProps {
   className?: string
 }
 
 export default function ProjectsSection({ className }: ProjectsSectionProps) {
+  const prefersReducedMotion = useReducedMotion()
   const classes = ['resume-section', 'projects-section', className]
     .filter(Boolean)
     .join(' ')
 
+  const containerVariants = prefersReducedMotion
+    ? getReducedMotionVariants(staggerContainer)
+    : staggerContainer
+  const itemVariants = prefersReducedMotion
+    ? getReducedMotionVariants(staggerItem)
+    : staggerItem
+
   return (
-    <section
+    <AnimatedSection
       id="projects"
       className={classes}
-      aria-labelledby="projects-heading"
+      ariaLabelledby="projects-heading"
     >
       <SectionHeader
         id="projects-heading"
@@ -23,9 +40,20 @@ export default function ProjectsSection({ className }: ProjectsSectionProps) {
         title="Personal Projects"
         subtitle="Ideas, experiments, and live products"
       />
-      <div className="projects-section__grid">
+      <motion.div
+        className="projects-section__grid"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-50px' }}
+        variants={containerVariants}
+      >
         {projects.map((project: Project) => (
-          <article key={project.id} className="projects-section__card">
+          <motion.article
+            key={project.id}
+            className="projects-section__card"
+            variants={itemVariants}
+            whileHover={prefersReducedMotion ? undefined : hoverScale}
+          >
             <h3 className="projects-section__card-title">
               {project.url ? (
                 <a
@@ -43,9 +71,9 @@ export default function ProjectsSection({ className }: ProjectsSectionProps) {
             <p className="projects-section__card-description">
               {project.description}
             </p>
-          </article>
+          </motion.article>
         ))}
-      </div>
+      </motion.div>
       <div
         className="projects-section__other"
         aria-labelledby="projects-other-heading"
@@ -76,6 +104,6 @@ export default function ProjectsSection({ className }: ProjectsSectionProps) {
           })}
         </ul>
       </div>
-    </section>
+    </AnimatedSection>
   )
 }

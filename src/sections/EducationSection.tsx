@@ -1,3 +1,4 @@
+import AnimatedSection from '@components/AnimatedSection'
 import SectionHeader from '@components/SectionHeader'
 import type { Education } from '@data/education'
 import { education } from '@data/education'
@@ -12,10 +13,10 @@ export default function EducationSection({ className }: EducationSectionProps) {
     .join(' ')
 
   return (
-    <section
+    <AnimatedSection
       id="education"
       className={classes}
-      aria-labelledby="education-heading"
+      ariaLabelledby="education-heading"
     >
       <SectionHeader
         id="education-heading"
@@ -34,6 +35,6 @@ export default function EducationSection({ className }: EducationSectionProps) {
           </li>
         ))}
       </ul>
-    </section>
+    </AnimatedSection>
   )
 }

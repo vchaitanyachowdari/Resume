@@ -1,3 +1,4 @@
+import AnimatedSection from '@components/AnimatedSection'
 import SectionHeader from '@components/SectionHeader'
 import type { Certification } from '@data/certifications'
 import { certifications } from '@data/certifications'
@@ -14,10 +15,10 @@ export default function CertificationsSection({
     .join(' ')
 
   return (
-    <section
+    <AnimatedSection
       id="certifications"
       className={classes}
-      aria-labelledby="certifications-heading"
+      ariaLabelledby="certifications-heading"
     >
       <SectionHeader
         id="certifications-heading"
@@ -55,6 +56,6 @@ export default function CertificationsSection({
           </li>
         ))}
       </ul>
-    </section>
+    </AnimatedSection>
   )
 }

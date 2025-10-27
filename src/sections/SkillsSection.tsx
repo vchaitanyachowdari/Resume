@@ -1,3 +1,4 @@
+import AnimatedSection from '@components/AnimatedSection'
 import BadgeList from '@components/BadgeList'
 import Icon from '@components/icons'
 import SectionHeader from '@components/SectionHeader'
@@ -14,7 +15,11 @@ export default function SkillsSection({ className }: SkillsSectionProps) {
     .join(' ')
 
   return (
-    <section id="skills" className={classes} aria-labelledby="skills-heading">
+    <AnimatedSection
+      id="skills"
+      className={classes}
+      ariaLabelledby="skills-heading"
+    >
       <SectionHeader
         id="skills-heading"
         icon="tools"
@@ -55,6 +60,6 @@ export default function SkillsSection({ className }: SkillsSectionProps) {
           ))}
         </ul>
       </div>
-    </section>
+    </AnimatedSection>
   )
 }

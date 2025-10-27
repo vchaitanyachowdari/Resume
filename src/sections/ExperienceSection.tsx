@@ -1,3 +1,4 @@
+import AnimatedSection from '@components/AnimatedSection'
 import SectionHeader from '@components/SectionHeader'
 import TimelineItem from '@components/TimelineItem'
 import type { Experience } from '@data/experience'
@@ -15,10 +16,10 @@ export default function ExperienceSection({
     .join(' ')
 
   return (
-    <section
+    <AnimatedSection
       id="experience"
       className={classes}
-      aria-labelledby="experience-heading"
+      ariaLabelledby="experience-heading"
     >
       <SectionHeader
         id="experience-heading"
@@ -38,6 +39,6 @@ export default function ExperienceSection({
           />
         ))}
       </div>
-    </section>
+    </AnimatedSection>
   )
 }
