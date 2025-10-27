@@ -6,9 +6,7 @@ interface EducationSectionProps {
   className?: string
 }
 
-export default function EducationSection({
-  className,
-}: EducationSectionProps) {
+export default function EducationSection({ className }: EducationSectionProps) {
   const classes = ['resume-section', 'education-section', className]
     .filter(Boolean)
     .join(' ')
@@ -28,7 +26,9 @@ export default function EducationSection({
       <ul className="education-section__list">
         {education.map((item: Education) => (
           <li key={item.id} className="education-section__item">
-            <h3 className="education-section__institution">{item.institution}</h3>
+            <h3 className="education-section__institution">
+              {item.institution}
+            </h3>
             <p className="education-section__program">{item.program}</p>
             <span className="education-section__period">{item.period}</span>
           </li>

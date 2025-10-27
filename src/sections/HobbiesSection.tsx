@@ -6,9 +6,7 @@ interface HobbiesSectionProps {
   className?: string
 }
 
-export default function HobbiesSection({
-  className,
-}: HobbiesSectionProps) {
+export default function HobbiesSection({ className }: HobbiesSectionProps) {
   const classes = ['resume-section', 'hobbies-section', className]
     .filter(Boolean)
     .join(' ')

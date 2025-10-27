@@ -35,7 +35,10 @@ export default function SkillsSection({ className }: SkillsSectionProps) {
       >
         <div className="skills-section__languages-header">
           <Icon name="language" className="skills-section__languages-icon" />
-          <h3 id="skills-languages-heading" className="skills-section__languages-title">
+          <h3
+            id="skills-languages-heading"
+            className="skills-section__languages-title"
+          >
             Languages
           </h3>
         </div>

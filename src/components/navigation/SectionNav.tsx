@@ -22,7 +22,9 @@ export default function SectionNav({ items, activeId }: SectionNavProps) {
                 className={({ isActive: isRouteActive }) =>
                   [
                     'section-nav__link',
-                    isRouteActive || isActive ? 'section-nav__link--active' : '',
+                    isRouteActive || isActive
+                      ? 'section-nav__link--active'
+                      : '',
                   ]
                     .filter(Boolean)
                     .join(' ')
