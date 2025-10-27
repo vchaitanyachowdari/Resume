@@ -6,6 +6,16 @@ interface CertificationsSectionProps {
   className?: string
 }
 
+/**
+ * Render the Certifications section containing credential items.
+ *
+ * Each item displays the certification title, issuer, issuance date, description,
+ * and an optional "View Credential" link when a URL is available. The list is
+ * generated from the imported certifications data.
+ *
+ * @param className - Optional additional CSS class to append to the section element
+ * @returns The section element containing the rendered certifications list as JSX
+ */
 export default function CertificationsSection({
   className,
 }: CertificationsSectionProps) {

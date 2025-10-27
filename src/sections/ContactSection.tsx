@@ -7,6 +7,12 @@ interface ContactSectionProps {
   className?: string
 }
 
+/**
+ * Render the Contact section with a header and a grid of contact method cards.
+ *
+ * @param className - Optional additional CSS class or classes applied to the section container
+ * @returns The section element containing the contact header and a grid of `StatCard` items for each contact method
+ */
 export default function ContactSection({ className }: ContactSectionProps) {
   const classes = ['resume-section', 'contact-section', className]
     .filter(Boolean)

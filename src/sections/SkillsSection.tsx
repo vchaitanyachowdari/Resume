@@ -8,6 +8,12 @@ interface SkillsSectionProps {
   className?: string
 }
 
+/**
+ * Renders the "Skills & Tools" resume section containing categorized skill badges and a languages list.
+ *
+ * @param className - Optional additional CSS class names to append to the root section element
+ * @returns The section's JSX element containing a section header, a grid of skill categories with badges, and a languages list
+ */
 export default function SkillsSection({ className }: SkillsSectionProps) {
   const classes = ['resume-section', 'skills-section', className]
     .filter(Boolean)
