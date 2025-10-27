@@ -6,6 +6,16 @@ interface TimelineItemProps {
   highlights?: string[]
 }
 
+/**
+ * Render a timeline entry showing a title and period with optional subtitle, description, and highlights.
+ *
+ * @param title - Main heading text for the timeline item
+ * @param subtitle - Optional secondary text shown under the title
+ * @param period - Time range or period label displayed alongside the title
+ * @param description - Optional descriptive paragraph for the timeline item
+ * @param highlights - Optional list of highlight strings; when provided and non-empty, rendered as a list
+ * @returns A React element representing the rendered timeline item
+ */
 export default function TimelineItem({
   title,
   subtitle,

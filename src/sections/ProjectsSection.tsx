@@ -6,6 +6,12 @@ interface ProjectsSectionProps {
   className?: string
 }
 
+/**
+ * Renders the "Personal Projects" section containing featured projects and a list of other notable projects.
+ *
+ * @param className - Optional additional CSS class(es) to append to the section's base classes
+ * @returns A React element for the projects section with project cards and an "Other Notable Projects" list
+ */
 export default function ProjectsSection({ className }: ProjectsSectionProps) {
   const classes = ['resume-section', 'projects-section', className]
     .filter(Boolean)

@@ -6,6 +6,12 @@ interface EducationSectionProps {
   className?: string
 }
 
+/**
+ * Render the "Education" resume section containing a header and a list of education entries.
+ *
+ * @param className - Optional additional CSS class(es) appended to the section's root element
+ * @returns The section element with id "education" that contains a SectionHeader and a list of education items
+ */
 export default function EducationSection({ className }: EducationSectionProps) {
   const classes = ['resume-section', 'education-section', className]
     .filter(Boolean)
