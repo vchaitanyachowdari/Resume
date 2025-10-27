@@ -79,7 +79,6 @@ export default function HeroSection({ className }: HeroSectionProps) {
     >
       <motion.div
         className="hero-section__media"
-        role="presentation"
         initial="hidden"
         animate="visible"
         variants={fadeInVariants}
@@ -89,6 +88,7 @@ export default function HeroSection({ className }: HeroSectionProps) {
           src={profile.image}
           alt={profile.imageAlt}
           className="hero-section__avatar"
+          loading="eager"
         />
       </motion.div>
       <div className="hero-section__content">

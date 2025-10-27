@@ -84,10 +84,15 @@ export default function ContactForm({ className }: ContactFormProps) {
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
       variants={fadeInUp}
+      noValidate
+      aria-label="Contact form"
     >
       <div className="contact-form__field">
         <label htmlFor="name" className="contact-form__label">
-          Name <span className="contact-form__required">*</span>
+          Name{' '}
+          <span className="contact-form__required" aria-label="required">
+            *
+          </span>
         </label>
         <input
           id="name"
@@ -95,16 +100,25 @@ export default function ContactForm({ className }: ContactFormProps) {
           className={`contact-form__input ${errors.name ? 'contact-form__input--error' : ''}`}
           placeholder="Your name"
           disabled={submitState === 'loading'}
+          aria-invalid={errors.name ? 'true' : 'false'}
+          aria-describedby={errors.name ? 'name-error' : undefined}
+          aria-required="true"
           {...register('name')}
         />
         {errors.name && (
           <motion.span
+            id="name-error"
             className="contact-form__error"
+            role="alert"
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
           >
-            <Icon name="alert" className="contact-form__error-icon" />
+            <Icon
+              name="alert"
+              className="contact-form__error-icon"
+              aria-hidden="true"
+            />
             {errors.name.message}
           </motion.span>
         )}
@@ -112,7 +126,10 @@ export default function ContactForm({ className }: ContactFormProps) {
 
       <div className="contact-form__field">
         <label htmlFor="email" className="contact-form__label">
-          Email <span className="contact-form__required">*</span>
+          Email{' '}
+          <span className="contact-form__required" aria-label="required">
+            *
+          </span>
         </label>
         <input
           id="email"
@@ -120,16 +137,25 @@ export default function ContactForm({ className }: ContactFormProps) {
           className={`contact-form__input ${errors.email ? 'contact-form__input--error' : ''}`}
           placeholder="your.email@example.com"
           disabled={submitState === 'loading'}
+          aria-invalid={errors.email ? 'true' : 'false'}
+          aria-describedby={errors.email ? 'email-error' : undefined}
+          aria-required="true"
           {...register('email')}
         />
         {errors.email && (
           <motion.span
+            id="email-error"
             className="contact-form__error"
+            role="alert"
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
           >
-            <Icon name="alert" className="contact-form__error-icon" />
+            <Icon
+              name="alert"
+              className="contact-form__error-icon"
+              aria-hidden="true"
+            />
             {errors.email.message}
           </motion.span>
         )}
@@ -137,7 +163,10 @@ export default function ContactForm({ className }: ContactFormProps) {
 
       <div className="contact-form__field">
         <label htmlFor="message" className="contact-form__label">
-          Message <span className="contact-form__required">*</span>
+          Message{' '}
+          <span className="contact-form__required" aria-label="required">
+            *
+          </span>
         </label>
         <textarea
           id="message"
@@ -145,16 +174,25 @@ export default function ContactForm({ className }: ContactFormProps) {
           placeholder="Tell me about your project or just say hi..."
           rows={5}
           disabled={submitState === 'loading'}
+          aria-invalid={errors.message ? 'true' : 'false'}
+          aria-describedby={errors.message ? 'message-error' : undefined}
+          aria-required="true"
           {...register('message')}
         />
         {errors.message && (
           <motion.span
+            id="message-error"
             className="contact-form__error"
+            role="alert"
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
           >
-            <Icon name="alert" className="contact-form__error-icon" />
+            <Icon
+              name="alert"
+              className="contact-form__error-icon"
+              aria-hidden="true"
+            />
             {errors.message.message}
           </motion.span>
         )}
@@ -163,6 +201,9 @@ export default function ContactForm({ className }: ContactFormProps) {
       {submitMessage && (
         <motion.div
           className={`contact-form__message contact-form__message--${submitState}`}
+          role={submitState === 'success' ? 'status' : 'alert'}
+          aria-live="polite"
+          aria-atomic="true"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
@@ -170,6 +211,7 @@ export default function ContactForm({ className }: ContactFormProps) {
           <Icon
             name={submitState === 'success' ? 'check' : 'alert'}
             className="contact-form__message-icon"
+            aria-hidden="true"
           />
           {submitMessage}
         </motion.div>
@@ -179,17 +221,27 @@ export default function ContactForm({ className }: ContactFormProps) {
         type="submit"
         className="contact-form__submit"
         disabled={submitState === 'loading'}
+        aria-busy={submitState === 'loading'}
+        aria-live="polite"
         whileHover={prefersReducedMotion ? undefined : hoverScale}
         whileTap={prefersReducedMotion ? undefined : tapScale}
       >
         {submitState === 'loading' ? (
           <>
-            <span className="contact-form__spinner" />
+            <span
+              className="contact-form__spinner"
+              role="status"
+              aria-label="Sending message"
+            />
             Sending...
           </>
         ) : (
           <>
-            <Icon name="send" className="contact-form__submit-icon" />
+            <Icon
+              name="send"
+              className="contact-form__submit-icon"
+              aria-hidden="true"
+            />
             Send Message
           </>
         )}

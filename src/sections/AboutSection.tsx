@@ -29,12 +29,16 @@ export default function AboutSection({ className }: AboutSectionProps) {
       </div>
       <div className="about-section__partners" aria-labelledby="about-partners">
         <div className="about-section__partners-heading">
-          <Icon name="handshake" className="about-section__partners-icon" />
+          <Icon
+            name="handshake"
+            className="about-section__partners-icon"
+            aria-hidden="true"
+          />
           <h3 id="about-partners" className="about-section__partners-title">
             Worked With
           </h3>
         </div>
-        <ul className="about-section__partners-list">
+        <ul className="about-section__partners-list" role="list">
           {partners.map((partner) => (
             <li key={partner.id} className="about-section__partner">
               <figure className="about-section__partner-card">
@@ -42,6 +46,7 @@ export default function AboutSection({ className }: AboutSectionProps) {
                   src={partner.image}
                   alt={partner.alt}
                   className="about-section__partner-logo"
+                  loading="lazy"
                 />
                 <figcaption className="about-section__partner-caption">
                   <span className="about-section__partner-name">

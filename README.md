@@ -135,10 +135,19 @@ The application uses a comprehensive design token system defined in `src/styles/
 
 ### Accessibility
 
-- WCAG AA compliant color contrast ratios
-- Keyboard navigation support
-- Respects `prefers-reduced-motion`
-- Semantic HTML structure
+This project is built with comprehensive accessibility support to ensure WCAG 2.1 AA compliance:
+
+- **WCAG 2.1 AA compliant** color contrast ratios (4.5:1+ for text, 3:1+ for UI)
+- **Full keyboard navigation** - all interactive elements accessible via keyboard
+- **Skip navigation link** - allows users to bypass repetitive content
+- **Focus management** - visible focus indicators and focus trapping in modals
+- **Screen reader support** - proper ARIA labels, roles, and live regions
+- **Semantic HTML** - proper landmarks (`main`, `nav`, `aside`, etc.)
+- **Reduced motion support** - respects `prefers-reduced-motion` preference
+- **Touch target sizing** - minimum 44x44px for all interactive elements
+- **Form accessibility** - proper labels, error announcements, and validation
+
+See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for detailed documentation.
 
 ## 🔧 Development
 
@@ -185,7 +194,6 @@ Icons are managed through a barrel export in `src/components/icons/index.tsx`:
 
 ```tsx
 import Icon from '@components/icons'
-
 ;<Icon name="github" size={24} aria-label="GitHub Profile" />
 ```
 

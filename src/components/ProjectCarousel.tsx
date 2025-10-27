@@ -66,19 +66,22 @@ export default function ProjectCarousel({
       className="project-carousel"
       onKeyDown={handleKeyDown}
       role="region"
-      aria-label="Project carousel"
-      tabIndex={0}
+      aria-label="Featured projects carousel"
+      aria-live="polite"
+      aria-atomic="true"
     >
       <div className="project-carousel__container">
         <button
           className="project-carousel__nav project-carousel__nav--prev"
           onClick={handlePrevious}
           aria-label="Previous project"
+          type="button"
         >
-          <Icon name="chevron-left" />
+          <Icon name="chevron-left" aria-hidden="true" />
+          <span className="sr-only">Previous</span>
         </button>
 
-        <div className="project-carousel__content">
+        <div className="project-carousel__content" tabIndex={0}>
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={currentIndex}
@@ -91,11 +94,13 @@ export default function ProjectCarousel({
               className="project-carousel__slide"
             >
               <motion.article
+                id={`project-${currentIndex}`}
                 className="project-carousel__card"
                 whileHover={prefersReducedMotion ? undefined : hoverScale}
                 onClick={() => onProjectClick(currentProject)}
                 role="button"
                 tabIndex={0}
+                aria-label={`View details for ${currentProject.title}`}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault()
@@ -139,13 +144,19 @@ export default function ProjectCarousel({
           className="project-carousel__nav project-carousel__nav--next"
           onClick={handleNext}
           aria-label="Next project"
+          type="button"
         >
-          <Icon name="chevron-right" />
+          <Icon name="chevron-right" aria-hidden="true" />
+          <span className="sr-only">Next</span>
         </button>
       </div>
 
-      <div className="project-carousel__indicators">
-        {projects.map((_, index) => (
+      <div
+        className="project-carousel__indicators"
+        role="tablist"
+        aria-label="Project indicators"
+      >
+        {projects.map((project, index) => (
           <button
             key={index}
             className={`project-carousel__indicator ${
@@ -157,10 +168,17 @@ export default function ProjectCarousel({
               setDirection(index > currentIndex ? 1 : -1)
               setCurrentIndex(index)
             }}
-            aria-label={`Go to project ${index + 1}`}
-            aria-current={index === currentIndex ? 'true' : 'false'}
+            role="tab"
+            aria-label={`View project ${index + 1}: ${project.title}`}
+            aria-selected={index === currentIndex}
+            aria-controls={`project-${index}`}
+            type="button"
           />
         ))}
+      </div>
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        Showing project {currentIndex + 1} of {projects.length}:{' '}
+        {currentProject.title}
       </div>
     </div>
   )

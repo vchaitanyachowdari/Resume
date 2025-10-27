@@ -36,23 +36,25 @@ export default function SocialLinks({ links }: SocialLinksProps) {
   }
 
   return (
-    <ul className="social-links">
-      {links.map((link) => (
-        <li key={link.id} className="social-links__item">
-          <motion.a
-            className="social-links__link"
-            href={link.href}
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label={link.label}
-            onClick={() => handleClick(link.id)}
-            whileHover={prefersReducedMotion ? undefined : enhancedHoverScale}
-            whileTap={prefersReducedMotion ? undefined : tapScale}
-          >
-            <Icon name={link.icon} />
-          </motion.a>
-        </li>
-      ))}
-    </ul>
+    <nav aria-label="Social media links">
+      <ul className="social-links">
+        {links.map((link) => (
+          <li key={link.id} className="social-links__item">
+            <motion.a
+              className="social-links__link"
+              href={link.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={`${link.label} (opens in new tab)`}
+              onClick={() => handleClick(link.id)}
+              whileHover={prefersReducedMotion ? undefined : enhancedHoverScale}
+              whileTap={prefersReducedMotion ? undefined : tapScale}
+            >
+              <Icon name={link.icon} aria-hidden="true" />
+            </motion.a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   )
 }

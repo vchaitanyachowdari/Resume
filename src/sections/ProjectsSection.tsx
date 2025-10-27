@@ -74,6 +74,7 @@ export default function ProjectsSection({ className }: ProjectsSectionProps) {
         whileInView="visible"
         viewport={{ once: true, margin: '-50px' }}
         variants={containerVariants}
+        role="list"
       >
         {projects
           .filter((p) => !p.featured)
@@ -86,6 +87,7 @@ export default function ProjectsSection({ className }: ProjectsSectionProps) {
               onClick={() => handleProjectClick(project)}
               role="button"
               tabIndex={0}
+              aria-label={`View details for ${project.title}`}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
@@ -111,25 +113,32 @@ export default function ProjectsSection({ className }: ProjectsSectionProps) {
         >
           Other Notable Projects
         </h4>
-        <ul className="projects-section__other-list">
-          {otherProjects.map((project: OtherProject) => {
-            const href = project.url ?? '#'
-            const isPlaceholder = !project.url || project.url === '#'
+        <nav aria-label="Other projects">
+          <ul className="projects-section__other-list" role="list">
+            {otherProjects.map((project: OtherProject) => {
+              const href = project.url ?? '#'
+              const isPlaceholder = !project.url || project.url === '#'
 
-            return (
-              <li key={project.id} className="projects-section__other-item">
-                <a
-                  href={href}
-                  target={isPlaceholder ? undefined : '_blank'}
-                  rel={isPlaceholder ? undefined : 'noreferrer noopener'}
-                  className="projects-section__other-link"
-                >
-                  {project.title}
-                </a>
-              </li>
-            )
-          })}
-        </ul>
+              return (
+                <li key={project.id} className="projects-section__other-item">
+                  <a
+                    href={href}
+                    target={isPlaceholder ? undefined : '_blank'}
+                    rel={isPlaceholder ? undefined : 'noreferrer noopener'}
+                    className="projects-section__other-link"
+                    aria-label={
+                      isPlaceholder
+                        ? project.title
+                        : `${project.title} (opens in new tab)`
+                    }
+                  >
+                    {project.title}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
       </div>
 
       <ProjectModal

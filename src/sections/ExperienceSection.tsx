@@ -27,7 +27,7 @@ export default function ExperienceSection({
         title="Work Experience"
         subtitle="Founder, builder, and collaborator"
       />
-      <div className="experience-section__timeline">
+      <div className="experience-section__timeline" role="list">
         {experiences.map((experience: Experience) => (
           <TimelineItem
             key={experience.id}
