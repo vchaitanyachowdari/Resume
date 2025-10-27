@@ -36,7 +36,9 @@ export default function CertificationsSection({
                 {certification.issued}
               </span>
             </div>
-            <p className="certifications-section__issuer">{certification.issuer}</p>
+            <p className="certifications-section__issuer">
+              {certification.issuer}
+            </p>
             <p className="certifications-section__description">
               {certification.description}
             </p>

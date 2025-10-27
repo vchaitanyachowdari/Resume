@@ -6,9 +6,7 @@ interface ProjectsSectionProps {
   className?: string
 }
 
-export default function ProjectsSection({
-  className,
-}: ProjectsSectionProps) {
+export default function ProjectsSection({ className }: ProjectsSectionProps) {
   const classes = ['resume-section', 'projects-section', className]
     .filter(Boolean)
     .join(' ')
@@ -52,7 +50,10 @@ export default function ProjectsSection({
         className="projects-section__other"
         aria-labelledby="projects-other-heading"
       >
-        <h4 id="projects-other-heading" className="projects-section__other-title">
+        <h4
+          id="projects-other-heading"
+          className="projects-section__other-title"
+        >
           Other Notable Projects
         </h4>
         <ul className="projects-section__other-list">

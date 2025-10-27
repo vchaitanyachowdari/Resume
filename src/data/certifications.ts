@@ -10,7 +10,8 @@ export interface Certification {
 export const certifications: Certification[] = [
   {
     id: 'iit-ai-data-science',
-    title: 'Professional Certificate Program in Artificial Intelligence and Data Science',
+    title:
+      'Professional Certificate Program in Artificial Intelligence and Data Science',
     issuer: 'Indian Institute of Technology, Indore',
     issued: 'In Progress — Feb 2026',
     description:

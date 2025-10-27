@@ -7,9 +7,7 @@ interface ContactSectionProps {
   className?: string
 }
 
-export default function ContactSection({
-  className,
-}: ContactSectionProps) {
+export default function ContactSection({ className }: ContactSectionProps) {
   const classes = ['resume-section', 'contact-section', className]
     .filter(Boolean)
     .join(' ')

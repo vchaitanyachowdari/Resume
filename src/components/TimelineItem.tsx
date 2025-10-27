@@ -21,9 +21,7 @@ export default function TimelineItem({
         <h3 className="timeline-item__title">{title}</h3>
         <span className="timeline-item__period">{period}</span>
       </header>
-      {subtitle ? (
-        <p className="timeline-item__subtitle">{subtitle}</p>
-      ) : null}
+      {subtitle ? <p className="timeline-item__subtitle">{subtitle}</p> : null}
       {description ? (
         <p className="timeline-item__description">{description}</p>
       ) : null}
