@@ -16,6 +16,14 @@ import {
   FaDownload,
   FaAward,
   FaInfoCircle,
+  FaTimes,
+  FaExternalLinkAlt,
+  FaPaperPlane,
+  FaExclamationTriangle,
+  FaCheck,
+  FaChevronLeft,
+  FaChevronRight,
+  FaArrowRight,
 } from 'react-icons/fa'
 
 const icons = {
@@ -36,6 +44,14 @@ const icons = {
   download: FaDownload,
   award: FaAward,
   info: FaInfoCircle,
+  close: FaTimes,
+  external: FaExternalLinkAlt,
+  send: FaPaperPlane,
+  alert: FaExclamationTriangle,
+  check: FaCheck,
+  'chevron-left': FaChevronLeft,
+  'chevron-right': FaChevronRight,
+  'arrow-right': FaArrowRight,
 }
 
 export type IconName = keyof typeof icons

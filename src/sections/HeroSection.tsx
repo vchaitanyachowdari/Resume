@@ -10,6 +10,7 @@ import {
   hoverScale,
   tapScale,
 } from '@utils/animations'
+import { trackDownload } from '@utils/analytics'
 
 interface HeroSectionProps {
   className?: string
@@ -62,6 +63,10 @@ export default function HeroSection({ className }: HeroSectionProps) {
   ]
 
   const isCtaExternal = !profile.cta.href.startsWith('#')
+
+  const handleDownload = () => {
+    trackDownload('V_Chaitanya_Chowdari_Resume.pdf')
+  }
 
   return (
     <motion.section
@@ -136,6 +141,7 @@ export default function HeroSection({ className }: HeroSectionProps) {
             href={profile.cta.href}
             target={isCtaExternal ? '_blank' : undefined}
             rel={isCtaExternal ? 'noreferrer noopener' : undefined}
+            onClick={handleDownload}
             whileHover={prefersReducedMotion ? undefined : hoverScale}
             whileTap={prefersReducedMotion ? undefined : tapScale}
           >
