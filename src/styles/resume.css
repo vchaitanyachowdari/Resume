@@ -3,6 +3,7 @@
   min-height: 100vh;
   padding: var(--space-8) var(--space-4) var(--space-12);
   background: var(--color-bg-secondary);
+  transition: var(--theme-transition);
 }
 
 .resume-layout__background {
@@ -37,6 +38,14 @@
   position: sticky;
   top: var(--space-8);
   align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.resume-layout__theme-toggle {
+  display: flex;
+  justify-content: center;
 }
 
 .resume-layout__content {
@@ -51,6 +60,7 @@
   box-shadow: var(--shadow-lg);
   padding: var(--space-6);
   border: 1px solid var(--color-border-primary);
+  transition: var(--theme-transition);
 }
 
 .section-nav__list {
@@ -100,6 +110,7 @@
   box-shadow: var(--shadow-lg);
   padding: var(--space-6);
   border: 1px solid rgba(148, 163, 184, 0.18);
+  transition: var(--theme-transition);
 }
 
 .section-header {

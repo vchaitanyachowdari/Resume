@@ -1,3 +1,4 @@
+import AnimatedSection from '@components/AnimatedSection'
 import Icon from '@components/icons'
 import SectionHeader from '@components/SectionHeader'
 import { aboutParagraphs } from '@data/about'
@@ -13,7 +14,11 @@ export default function AboutSection({ className }: AboutSectionProps) {
     .join(' ')
 
   return (
-    <section id="about" className={classes} aria-labelledby="about-heading">
+    <AnimatedSection
+      id="about"
+      className={classes}
+      ariaLabelledby="about-heading"
+    >
       <SectionHeader id="about-heading" icon="info" title="About Me" />
       <div className="about-section__content">
         {aboutParagraphs.map((paragraph) => (
@@ -51,6 +56,6 @@ export default function AboutSection({ className }: AboutSectionProps) {
           ))}
         </ul>
       </div>
-    </section>
+    </AnimatedSection>
   )
 }

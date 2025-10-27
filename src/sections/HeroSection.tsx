@@ -1,15 +1,32 @@
+import { motion } from 'framer-motion'
 import SocialLinks from '@components/SocialLinks'
 import Icon from '@components/icons'
 import { profile } from '@data/profile'
+import { useReducedMotion } from '@hooks/useReducedMotion'
+import {
+  fadeIn,
+  fadeInUp,
+  getReducedMotionVariants,
+  hoverScale,
+  tapScale,
+} from '@utils/animations'
 
 interface HeroSectionProps {
   className?: string
 }
 
 export default function HeroSection({ className }: HeroSectionProps) {
+  const prefersReducedMotion = useReducedMotion()
   const classes = ['resume-section', 'hero-section', className]
     .filter(Boolean)
     .join(' ')
+
+  const fadeInVariants = prefersReducedMotion
+    ? getReducedMotionVariants(fadeIn)
+    : fadeIn
+  const fadeInUpVariants = prefersReducedMotion
+    ? getReducedMotionVariants(fadeInUp)
+    : fadeInUp
 
   const socialLinks = [
     {
@@ -47,41 +64,103 @@ export default function HeroSection({ className }: HeroSectionProps) {
   const isCtaExternal = !profile.cta.href.startsWith('#')
 
   return (
-    <section id="hero" className={classes} aria-labelledby="hero-heading">
-      <div className="hero-section__media" role="presentation">
+    <motion.section
+      id="hero"
+      className={classes}
+      aria-labelledby="hero-heading"
+      initial="hidden"
+      animate="visible"
+      variants={fadeInVariants}
+    >
+      <motion.div
+        className="hero-section__media"
+        role="presentation"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInVariants}
+        transition={{ delay: 0.2 }}
+      >
         <img
           src={profile.image}
           alt={profile.imageAlt}
           className="hero-section__avatar"
         />
-      </div>
+      </motion.div>
       <div className="hero-section__content">
-        <span className="hero-section__eyebrow">AI Generalist & Builder</span>
-        <h1 id="hero-heading" className="hero-section__title">
+        <motion.span
+          className="hero-section__eyebrow"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUpVariants}
+          transition={{ delay: 0.1 }}
+        >
+          AI Generalist & Builder
+        </motion.span>
+        <motion.h1
+          id="hero-heading"
+          className="hero-section__title"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUpVariants}
+          transition={{ delay: 0.2 }}
+        >
           {profile.name}
-        </h1>
-        <p className="hero-section__subtitle">{profile.title}</p>
-        <p className="hero-section__description">{profile.description}</p>
-        <div className="hero-section__actions">
-          <a
+        </motion.h1>
+        <motion.p
+          className="hero-section__subtitle"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUpVariants}
+          transition={{ delay: 0.3 }}
+        >
+          {profile.title}
+        </motion.p>
+        <motion.p
+          className="hero-section__description"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUpVariants}
+          transition={{ delay: 0.4 }}
+        >
+          {profile.description}
+        </motion.p>
+        <motion.div
+          className="hero-section__actions"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUpVariants}
+          transition={{ delay: 0.5 }}
+        >
+          <motion.a
             className="hero-section__cta"
             href={profile.cta.href}
             target={isCtaExternal ? '_blank' : undefined}
             rel={isCtaExternal ? 'noreferrer noopener' : undefined}
+            whileHover={prefersReducedMotion ? undefined : hoverScale}
+            whileTap={prefersReducedMotion ? undefined : tapScale}
           >
             <Icon name={profile.cta.icon} className="hero-section__cta-icon" />
             <span>{profile.cta.label}</span>
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             className="hero-section__cta hero-section__cta--secondary"
             href={`mailto:${profile.email}`}
+            whileHover={prefersReducedMotion ? undefined : hoverScale}
+            whileTap={prefersReducedMotion ? undefined : tapScale}
           >
             <Icon name="email" className="hero-section__cta-icon" />
-            <span>Let’s Connect</span>
-          </a>
-        </div>
-        <SocialLinks links={socialLinks} />
+            <span>Let's Connect</span>
+          </motion.a>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUpVariants}
+          transition={{ delay: 0.6 }}
+        >
+          <SocialLinks links={socialLinks} />
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }

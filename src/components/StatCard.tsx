@@ -1,4 +1,7 @@
+import { motion } from 'framer-motion'
 import Icon, { type IconName } from '@components/icons'
+import { useReducedMotion } from '@hooks/useReducedMotion'
+import { hoverScale, tapScale } from '@utils/animations'
 
 interface StatCardProps {
   icon: IconName
@@ -15,6 +18,7 @@ export default function StatCard({
   href,
   description,
 }: StatCardProps) {
+  const prefersReducedMotion = useReducedMotion()
   const isExternalLink = href ? /^https?:/.test(href) : false
   const content = (
     <>
@@ -33,14 +37,16 @@ export default function StatCard({
 
   if (href) {
     return (
-      <a
+      <motion.a
         className="stat-card stat-card--link"
         href={href}
         target={isExternalLink ? '_blank' : undefined}
         rel={isExternalLink ? 'noreferrer noopener' : undefined}
+        whileHover={prefersReducedMotion ? undefined : hoverScale}
+        whileTap={prefersReducedMotion ? undefined : tapScale}
       >
         {content}
-      </a>
+      </motion.a>
     )
   }
 
