@@ -1,9 +1,10 @@
 import AnimatedSection from '@components/AnimatedSection'
 import BadgeList from '@components/BadgeList'
+import SkillBar from '@components/SkillBar'
 import Icon from '@components/icons'
 import SectionHeader from '@components/SectionHeader'
 import { languages } from '@data/personal'
-import { skillCategories } from '@data/skills'
+import { skillCategories, type Skill } from '@data/skills'
 
 interface SkillsSectionProps {
   className?: string
@@ -13,6 +14,10 @@ export default function SkillsSection({ className }: SkillsSectionProps) {
   const classes = ['resume-section', 'skills-section', className]
     .filter(Boolean)
     .join(' ')
+
+  const isSkillArray = (skills: string[] | Skill[]): skills is Skill[] => {
+    return skills.length > 0 && typeof skills[0] === 'object'
+  }
 
   return (
     <AnimatedSection
@@ -30,7 +35,20 @@ export default function SkillsSection({ className }: SkillsSectionProps) {
         {skillCategories.map((category) => (
           <div key={category.title} className="skills-section__category">
             <h3 className="skills-section__category-title">{category.title}</h3>
-            <BadgeList items={category.skills} />
+            {isSkillArray(category.skills) ? (
+              <div className="skills-section__bars">
+                {category.skills.map((skill, index) => (
+                  <SkillBar
+                    key={skill.name}
+                    name={skill.name}
+                    level={skill.level}
+                    delay={index * 0.05}
+                  />
+                ))}
+              </div>
+            ) : (
+              <BadgeList items={category.skills} />
+            )}
           </div>
         ))}
       </div>

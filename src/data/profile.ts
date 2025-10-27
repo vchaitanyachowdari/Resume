@@ -32,7 +32,7 @@ export const profile: Profile = {
     'V Chaitanya Chowdari - AI Generalist, Automation Expert, and Full Stack Developer',
   cta: {
     label: 'Download PDF',
-    href: '#',
+    href: '/V_Chaitanya_Chowdari_Resume.pdf',
     icon: 'download',
   },
   social: {

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import Icon, { type IconName } from '@components/icons'
 import { useReducedMotion } from '@hooks/useReducedMotion'
-import { hoverScale, tapScale } from '@utils/animations'
+import { tapScale } from '@utils/animations'
+import { trackSocialClick } from '@utils/analytics'
 
 interface SocialLink {
   id: string
@@ -21,6 +22,19 @@ export default function SocialLinks({ links }: SocialLinksProps) {
     return null
   }
 
+  const handleClick = (platform: string) => {
+    trackSocialClick(platform)
+  }
+
+  const enhancedHoverScale = {
+    scale: 1.15,
+    rotate: 5,
+    transition: {
+      duration: 0.2,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  }
+
   return (
     <ul className="social-links">
       {links.map((link) => (
@@ -31,7 +45,8 @@ export default function SocialLinks({ links }: SocialLinksProps) {
             target="_blank"
             rel="noreferrer noopener"
             aria-label={link.label}
-            whileHover={prefersReducedMotion ? undefined : hoverScale}
+            onClick={() => handleClick(link.id)}
+            whileHover={prefersReducedMotion ? undefined : enhancedHoverScale}
             whileTap={prefersReducedMotion ? undefined : tapScale}
           >
             <Icon name={link.icon} />

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import AnimatedSection from '@components/AnimatedSection'
 import SectionHeader from '@components/SectionHeader'
 import StatCard from '@components/StatCard'
+import ContactForm from '@components/ContactForm'
 import type { ContactMethod } from '@data/contact'
 import { contactMethods } from '@data/contact'
 import { useReducedMotion } from '@hooks/useReducedMotion'
@@ -58,6 +59,9 @@ export default function ContactSection({ className }: ContactSectionProps) {
           </motion.div>
         ))}
       </motion.div>
+      <div className="contact-section__form-wrapper">
+        <ContactForm />
+      </div>
     </AnimatedSection>
   )
 }
