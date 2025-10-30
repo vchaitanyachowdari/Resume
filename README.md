@@ -32,16 +32,23 @@ The development server will start at `http://localhost:5173/`
 ## 📁 Project Structure
 
 ```
-├── public/              # Static assets (favicon, manifest, robots.txt)
+├── public/              # Static assets (favicon, manifest, robots.txt, sitemap.xml)
+│   ├── robots.txt      # Search engine crawling rules
+│   ├── sitemap.xml     # Auto-generated sitemap (build)
+│   ├── og-image.png    # Open Graph social sharing image
+│   └── site.webmanifest # PWA manifest
 ├── src/
 │   ├── assets/         # Dynamic assets (fonts, images)
 │   │   ├── fonts/      # Proxima Nova font family
 │   │   └── images/     # Profile images and logos
 │   ├── components/     # Reusable React components
-│   │   └── icons/      # Icon barrel exports (react-icons)
+│   │   ├── icons/      # Icon barrel exports (react-icons)
+│   │   └── SEO/        # SEO meta tags component
 │   ├── context/        # React Context providers
+│   │   └── ThemeContext.tsx # Dark/light theme management
 │   ├── data/           # Data models and constants
-│   │   ├── profile.ts  # Personal information and SEO data
+│   │   ├── profile.ts  # Personal information
+│   │   ├── seoData.ts  # Section-specific SEO metadata
 │   │   ├── experience.ts  # Work experience data
 │   │   ├── skills.ts   # Technical and soft skills
 │   │   ├── education.ts   # Educational background
@@ -50,15 +57,22 @@ The development server will start at `http://localhost:5173/`
 │   ├── sections/       # Page sections (Hero, Experience, Projects, etc.)
 │   ├── styles/         # Global styles and design tokens
 │   │   ├── fonts.css   # @font-face declarations
+│   │   ├── tokens.css  # Design tokens and theme variables
 │   │   └── global.css  # CSS custom properties and resets
+│   ├── utils/          # Utility functions
+│   │   └── structuredData.ts # JSON-LD schema generators
 │   ├── App.tsx         # Main application component
 │   ├── main.tsx        # Application entry point
 │   └── vite-env.d.ts   # Vite TypeScript declarations
+├── scripts/            # Build scripts
+│   └── generate-sitemap.js # Sitemap generation script
 ├── index.html          # HTML entry point
 ├── vite.config.ts      # Vite configuration with path aliases
+├── vite-plugin-sitemap.ts # Custom Vite plugin for sitemap
 ├── tsconfig.json       # TypeScript configuration
 ├── eslint.config.js    # ESLint configuration
 ├── .prettierrc         # Prettier configuration
+├── SEO_IMPLEMENTATION.md # SEO documentation
 └── package.json        # Dependencies and scripts
 ```
 
@@ -166,18 +180,21 @@ This project is optimized for maximum performance with a target Lighthouse score
 ### Performance Metrics
 
 **Bundle Sizes (gzipped):**
+
 - Initial JS: ~68KB (gzipped)
 - React vendor: ~45KB (gzipped)
 - Animation library: ~38KB (gzipped)
 - Lazy chunks: 0.35KB - 3.76KB each
 
 **Compression Gains:**
+
 - Gzip: ~70% size reduction
 - Brotli: ~75% size reduction
 
 ### Lazy-Loaded Sections
 
 The following sections are loaded on-demand using intersection observer:
+
 - Projects Section
 - Education Section
 - Certifications Section
@@ -201,6 +218,9 @@ npm run preview         # Preview production build locally
 # Performance
 npm run optimize-images  # Generate WebP versions of images
 npm run analyze         # Build and open bundle analysis report
+
+# SEO
+npm run generate-sitemap # Generate sitemap.xml (auto-generated on build)
 
 # Code Quality
 npm run lint            # Run ESLint
@@ -277,20 +297,69 @@ Or use GitHub Actions workflow (see `.github/workflows/`)
 
 ## 🔍 SEO Configuration
 
-### Meta Tags
+### Comprehensive SEO Implementation
 
-Managed via `react-helmet-async` with data from `src/data/profile.ts`:
+This project includes enterprise-level SEO features with a target Lighthouse SEO score ≥ 95:
 
-- Primary meta tags (title, description, keywords)
-- Open Graph tags (Facebook, LinkedIn)
-- Twitter Card tags
-- Canonical URL
-- Structured data (JSON-LD Schema.org)
+#### Dynamic Meta Tags (react-helmet-async)
 
-### Robots & Sitemap
+Section-specific meta tags that update on route changes:
 
-- `robots.txt` in `public/`
-- Consider adding `sitemap.xml` for better indexing
+- **Title Tags**: Unique titles for each section (Hero, About, Experience, Projects, etc.)
+- **Meta Descriptions**: Optimized descriptions for each section
+- **Keywords**: Relevant keywords per section
+- **Canonical URLs**: Proper canonical links to avoid duplicate content
+- **Language Tags**: HTML lang attribute (en)
+- **Robots Meta**: Control over indexing and crawling
+
+#### Open Graph & Social Media
+
+**Open Graph (Facebook, LinkedIn)**:
+
+- `og:type`, `og:site_name`, `og:title`, `og:description`
+- `og:url`, `og:image` (1200x630px optimized)
+- `og:image:width`, `og:image:height`, `og:image:alt`
+- `og:locale`
+
+**Twitter Card**:
+
+- `twitter:card` (summary_large_image)
+- `twitter:site`, `twitter:creator`
+- `twitter:title`, `twitter:description`, `twitter:image`
+
+#### JSON-LD Structured Data (Schema.org)
+
+Multiple schema types for rich search results:
+
+- **Person Schema**: Profile information with social links
+- **WebSite Schema**: Site description and author
+- **Organization Schema**: Work experience companies
+- **CreativeWork Schema**: Featured projects with metadata
+
+#### Theme-Color Meta Tags
+
+Dynamic theme color that adapts to light/dark mode:
+
+- Light mode: `#ffffff`
+- Dark mode: `#0f172a`
+- iOS status bar styling
+- Windows tile color
+
+#### Sitemap & Robots.txt
+
+**Sitemap.xml** (auto-generated during build):
+
+- All main sections with priorities and change frequencies
+- Located at `/sitemap.xml`
+- Submitted to search engines
+
+**Robots.txt**:
+
+- Allow all search engines
+- Reference to sitemap
+- Disallow private routes
+
+See [SEO_IMPLEMENTATION.md](./SEO_IMPLEMENTATION.md) for comprehensive documentation.
 
 ## 🎯 Migration Notes
 
