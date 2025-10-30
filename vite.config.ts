@@ -4,10 +4,111 @@ import path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import viteCompression from 'vite-plugin-compression'
 import { viteSitemapPlugin } from './vite-plugin-sitemap'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   plugins: [
     react(),
+    VitePWA({
+      registerType: 'prompt',
+      includeAssets: [
+        'favicon.ico',
+        'apple-touch-icon.png',
+        'android-chrome-192x192.png',
+        'android-chrome-512x512.png',
+        'robots.txt',
+      ],
+      manifest: {
+        name: 'V Chaitanya Chowdari - Resume',
+        short_name: 'VC Resume',
+        description:
+          'Professional resume and portfolio of V Chaitanya Chowdari - AI Generalist, Automation Expert & Full Stack Developer',
+        theme_color: '#2563eb',
+        background_color: '#ffffff',
+        display: 'standalone',
+        scope: '/',
+        start_url: '/',
+        id: '/',
+        orientation: 'portrait-primary',
+        categories: ['portfolio', 'resume', 'business'],
+        lang: 'en-US',
+        dir: 'ltr',
+        icons: [
+          {
+            src: '/android-chrome-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: '/android-chrome-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+          {
+            src: '/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: '/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+        ],
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2,ttf,otf}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/www\.googletagmanager\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'google-analytics-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24,
+              },
+              networkTimeoutSeconds: 3,
+            },
+          },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+        ],
+        navigateFallback: null,
+        cleanupOutdatedCaches: true,
+      },
+      devOptions: {
+        enabled: false,
+        type: 'module',
+      },
+    }),
     visualizer({
       filename: './dist/stats.html',
       open: false,

@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@context/ThemeContext'
 import ResumePage from '@sections/ResumePage'
+import PWAPrompt from '@components/PWAPrompt'
+import OfflineIndicator from '@components/OfflineIndicator'
 
 const queryClient = new QueryClient()
 
@@ -18,6 +20,8 @@ function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </BrowserRouter>
+          <PWAPrompt />
+          <OfflineIndicator />
         </ThemeProvider>
       </QueryClientProvider>
     </HelmetProvider>

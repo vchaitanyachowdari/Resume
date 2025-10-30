@@ -73,6 +73,7 @@ The development server will start at `http://localhost:5173/`
 ├── eslint.config.js    # ESLint configuration
 ├── .prettierrc         # Prettier configuration
 ├── SEO_IMPLEMENTATION.md # SEO documentation
+├── PWA_ANALYTICS_DOCUMENTATION.md # PWA & Analytics documentation
 └── package.json        # Dependencies and scripts
 ```
 
@@ -105,6 +106,12 @@ The development server will start at `http://localhost:5173/`
 ### Meta Tags & SEO
 
 - **React Helmet Async 2.0** - Manage document head (title, meta tags, etc.)
+
+### PWA & Analytics
+
+- **vite-plugin-pwa** - Progressive Web App support with Workbox
+- **workbox-window** - Service worker management
+- **Google Analytics 4** - Privacy-respecting analytics with DNT support
 
 ### Code Quality
 
@@ -204,6 +211,68 @@ The following sections are loaded on-demand using intersection observer:
 Critical sections (Hero, About, Experience, Skills) are loaded immediately for fast initial render.
 
 See [PERFORMANCE_OPTIMIZATION.md](./PERFORMANCE_OPTIMIZATION.md) for comprehensive documentation.
+
+## 📱 Progressive Web App (PWA)
+
+This application is a fully functional Progressive Web App with:
+
+### Features
+
+- **Installable**: Can be installed on desktop and mobile devices
+- **Offline Support**: Service worker caches assets for offline access
+- **Update Notifications**: Users are prompted when new versions are available
+- **Offline Indicator**: Visual feedback when network is unavailable
+- **Optimized Caching**: Strategic caching for fonts, images, and analytics
+
+### Service Worker Strategies
+
+- **Precaching**: All static assets precached during installation
+- **Runtime Caching**:
+  - Google Fonts: CacheFirst (1 year)
+  - Google Analytics: NetworkFirst (1 day)
+  - Images: CacheFirst (30 days)
+
+### Manifest
+
+The web manifest includes:
+- App metadata and icons (192x192, 512x512)
+- Maskable icons for better display on various devices
+- Theme colors for light and dark modes
+- Standalone display mode for app-like experience
+
+See [PWA_ANALYTICS_DOCUMENTATION.md](./PWA_ANALYTICS_DOCUMENTATION.md) for detailed documentation.
+
+## 📊 Analytics
+
+Privacy-respecting Google Analytics 4 integration:
+
+### Features
+
+- **Lazy Loading**: Analytics script loads asynchronously after app initialization
+- **Do Not Track**: Respects browser DNT settings
+- **Environment-Based**: Only loads when measurement ID is provided
+- **Duplicate Prevention**: Prevents accidental duplicate event tracking
+- **Custom Events**: Tracks key user interactions
+
+### Tracked Events
+
+- **Resume Download**: When users download the PDF resume
+- **Contact Form**: Successful submissions and errors
+- **Theme Toggle**: When users switch between light/dark modes
+- **Project Interactions**: Views, clicks, and modal closures
+- **Social Media Clicks**: Engagement with social links
+
+### Configuration
+
+Add your GA4 Measurement ID to `.env`:
+
+```bash
+VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+Analytics are automatically disabled if no ID is provided or if DNT is enabled.
+
+See [PWA_ANALYTICS_DOCUMENTATION.md](./PWA_ANALYTICS_DOCUMENTATION.md) for comprehensive setup and testing guides.
 
 ## 🔧 Development
 
