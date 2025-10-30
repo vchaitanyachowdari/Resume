@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import SocialLinks from '@components/SocialLinks'
 import Icon from '@components/icons'
+import OptimizedImage from '@components/OptimizedImage'
 import { profile } from '@data/profile'
 import { useReducedMotion } from '@hooks/useReducedMotion'
 import {
@@ -11,6 +12,7 @@ import {
   tapScale,
 } from '@utils/animations'
 import { trackDownload } from '@utils/analytics'
+import heroImageWebp from '@assets/images/logo.webp'
 
 interface HeroSectionProps {
   className?: string
@@ -84,11 +86,14 @@ export default function HeroSection({ className }: HeroSectionProps) {
         variants={fadeInVariants}
         transition={{ delay: 0.2 }}
       >
-        <img
+        <OptimizedImage
           src={profile.image}
+          webpSrc={heroImageWebp}
           alt={profile.imageAlt}
           className="hero-section__avatar"
-          loading="eager"
+          width={300}
+          height={300}
+          eager
         />
       </motion.div>
       <div className="hero-section__content">

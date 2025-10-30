@@ -149,6 +149,45 @@ This project is built with comprehensive accessibility support to ensure WCAG 2.
 
 See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for detailed documentation.
 
+## ⚡ Performance Optimizations
+
+This project is optimized for maximum performance with a target Lighthouse score ≥90 on both desktop and mobile.
+
+### Key Optimizations
+
+- **Code Splitting**: Non-critical sections lazy-loaded with `React.lazy` and `Suspense`
+- **Image Optimization**: WebP format with responsive sizes and lazy loading
+- **Bundle Analysis**: Rollup visualizer for tracking bundle size
+- **Critical Assets**: Preloading of fonts and hero image
+- **CSS Containment**: Layout optimization with `contain` and `content-visibility`
+- **Web Vitals Monitoring**: Real-time performance tracking (CLS, INP, LCP, FCP, TTFB)
+- **Compression**: Gzip and Brotli for reduced transfer sizes
+
+### Performance Metrics
+
+**Bundle Sizes (gzipped):**
+- Initial JS: ~68KB (gzipped)
+- React vendor: ~45KB (gzipped)
+- Animation library: ~38KB (gzipped)
+- Lazy chunks: 0.35KB - 3.76KB each
+
+**Compression Gains:**
+- Gzip: ~70% size reduction
+- Brotli: ~75% size reduction
+
+### Lazy-Loaded Sections
+
+The following sections are loaded on-demand using intersection observer:
+- Projects Section
+- Education Section
+- Certifications Section
+- Hobbies Section
+- Contact Section
+
+Critical sections (Hero, About, Experience, Skills) are loaded immediately for fast initial render.
+
+See [PERFORMANCE_OPTIMIZATION.md](./PERFORMANCE_OPTIMIZATION.md) for comprehensive documentation.
+
 ## 🔧 Development
 
 ### Available Scripts
@@ -158,6 +197,10 @@ See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for detailed documentation.
 npm run dev              # Start dev server with HMR
 npm run build           # Type-check and build for production
 npm run preview         # Preview production build locally
+
+# Performance
+npm run optimize-images  # Generate WebP versions of images
+npm run analyze         # Build and open bundle analysis report
 
 # Code Quality
 npm run lint            # Run ESLint

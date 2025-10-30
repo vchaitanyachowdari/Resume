@@ -1,5 +1,6 @@
 import AnimatedSection from '@components/AnimatedSection'
 import Icon from '@components/icons'
+import OptimizedImage from '@components/OptimizedImage'
 import SectionHeader from '@components/SectionHeader'
 import { aboutParagraphs } from '@data/about'
 import { partners } from '@data/partners'
@@ -42,11 +43,13 @@ export default function AboutSection({ className }: AboutSectionProps) {
           {partners.map((partner) => (
             <li key={partner.id} className="about-section__partner">
               <figure className="about-section__partner-card">
-                <img
+                <OptimizedImage
                   src={partner.image}
+                  webpSrc={partner.webpImage}
                   alt={partner.alt}
                   className="about-section__partner-logo"
-                  loading="lazy"
+                  width={120}
+                  height={120}
                 />
                 <figcaption className="about-section__partner-caption">
                   <span className="about-section__partner-name">
