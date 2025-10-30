@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import viteCompression from 'vite-plugin-compression'
+import { viteSitemapPlugin } from './vite-plugin-sitemap'
 
 export default defineConfig({
   plugins: [
@@ -22,6 +23,10 @@ export default defineConfig({
       algorithm: 'brotliCompress',
       ext: '.br',
       deleteOriginFile: false,
+    }),
+    viteSitemapPlugin({
+      baseUrl: 'https://www.chowdari.in/resume',
+      outDir: 'dist',
     }),
   ],
   resolve: {

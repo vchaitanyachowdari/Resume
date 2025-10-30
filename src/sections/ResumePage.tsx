@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { useNavigate, useParams } from 'react-router-dom'
 import ResumeLayout from '@components/layout/ResumeLayout'
 import SectionNav from '@components/navigation/SectionNav'
 import LazySection from '@components/LazySection'
+import { SEO } from '@components/SEO'
 import AboutSection from '@sections/AboutSection'
 import ExperienceSection from '@sections/ExperienceSection'
 import FooterSection from '@sections/FooterSection'
@@ -16,8 +16,9 @@ import {
   sectionNavItems,
   type SectionId,
 } from '@data/navigation'
-import { seoData } from '@data/profile'
+import { getSectionSEO } from '@data/seoData'
 import { useWebVitals } from '@hooks/useWebVitals'
+import { getAllStructuredData } from '@utils/structuredData'
 import '@styles/resume.css'
 
 interface RouteParams extends Record<string, string | undefined> {
@@ -99,20 +100,24 @@ export default function ResumePage() {
     <SectionNav items={sectionNavItems} activeId={activeSection} />
   )
 
+  const sectionSEO = getSectionSEO(activeSection)
+  const baseUrl = 'https://www.chowdari.in/resume'
+  const canonicalUrl =
+    activeSection === 'hero' ? baseUrl : `${baseUrl}/${activeSection}`
+
+  const structuredData = useMemo(() => getAllStructuredData(), [])
+
   return (
     <>
-      <Helmet>
-        <title>{seoData.title}</title>
-        <meta name="description" content={seoData.description} />
-        <meta name="keywords" content={seoData.keywords.join(', ')} />
-        <link rel="canonical" href={seoData.canonicalUrl} />
-        <meta property="og:title" content={seoData.title} />
-        <meta property="og:description" content={seoData.description} />
-        <meta property="og:image" content={seoData.ogImage} />
-        <meta property="og:url" content={seoData.canonicalUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content={seoData.twitterHandle} />
-      </Helmet>
+      <SEO
+        title={sectionSEO.title}
+        description={sectionSEO.description}
+        keywords={sectionSEO.keywords}
+        canonicalUrl={canonicalUrl}
+        ogImage={sectionSEO.ogImage}
+        twitterHandle="@vchaitanyachai"
+        structuredData={structuredData}
+      />
       <ResumeLayout navigation={navigation}>
         <HeroSection />
         <div className="resume-grid">
