@@ -3,15 +3,11 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate, useParams } from 'react-router-dom'
 import ResumeLayout from '@components/layout/ResumeLayout'
 import SectionNav from '@components/navigation/SectionNav'
+import LazySection from '@components/LazySection'
 import AboutSection from '@sections/AboutSection'
-import CertificationsSection from '@sections/CertificationsSection'
-import ContactSection from '@sections/ContactSection'
-import EducationSection from '@sections/EducationSection'
 import ExperienceSection from '@sections/ExperienceSection'
 import FooterSection from '@sections/FooterSection'
 import HeroSection from '@sections/HeroSection'
-import HobbiesSection from '@sections/HobbiesSection'
-import ProjectsSection from '@sections/ProjectsSection'
 import SkillsSection from '@sections/SkillsSection'
 import {
   defaultSectionId,
@@ -21,6 +17,7 @@ import {
   type SectionId,
 } from '@data/navigation'
 import { seoData } from '@data/profile'
+import { useWebVitals } from '@hooks/useWebVitals'
 import '@styles/resume.css'
 
 interface RouteParams extends Record<string, string | undefined> {
@@ -32,6 +29,11 @@ export default function ResumePage() {
   const navigate = useNavigate()
   const [activeSection, setActiveSection] =
     useState<SectionId>(defaultSectionId)
+
+  useWebVitals({
+    reportToConsole: true,
+    reportToAnalytics: false,
+  })
 
   const targetSection = useMemo(
     () => (sectionId && isSectionId(sectionId) ? sectionId : undefined),
@@ -116,12 +118,32 @@ export default function ResumePage() {
         <div className="resume-grid">
           <AboutSection className="resume-grid__sidebar" />
           <ExperienceSection className="resume-grid__main" />
-          <ProjectsSection className="resume-grid__main" />
+          <LazySection
+            importFn={() => import('@sections/ProjectsSection')}
+            className="resume-grid__main"
+            preloadDistance={300}
+          />
           <SkillsSection className="resume-grid__sidebar" />
-          <EducationSection className="resume-grid__sidebar" />
-          <CertificationsSection className="resume-grid__main" />
-          <HobbiesSection className="resume-grid__sidebar" />
-          <ContactSection className="resume-grid__full" />
+          <LazySection
+            importFn={() => import('@sections/EducationSection')}
+            className="resume-grid__sidebar"
+            preloadDistance={300}
+          />
+          <LazySection
+            importFn={() => import('@sections/CertificationsSection')}
+            className="resume-grid__main"
+            preloadDistance={300}
+          />
+          <LazySection
+            importFn={() => import('@sections/HobbiesSection')}
+            className="resume-grid__sidebar"
+            preloadDistance={300}
+          />
+          <LazySection
+            importFn={() => import('@sections/ContactSection')}
+            className="resume-grid__full"
+            preloadDistance={300}
+          />
         </div>
 
         <FooterSection />
