@@ -17,9 +17,15 @@ export default function SectionHeader({
   action,
 }: SectionHeaderProps) {
   return (
-    <div className="section-header">
+    <header className="section-header">
       <div className="section-header__heading">
-        {icon ? <Icon name={icon} className="section-header__icon" /> : null}
+        {icon ? (
+          <Icon
+            name={icon}
+            className="section-header__icon"
+            aria-hidden="true"
+          />
+        ) : null}
         <div>
           <h2 id={id} className="section-header__title">
             {title}
@@ -30,6 +36,6 @@ export default function SectionHeader({
         </div>
       </div>
       {action ? <div className="section-header__action">{action}</div> : null}
-    </div>
+    </header>
   )
 }

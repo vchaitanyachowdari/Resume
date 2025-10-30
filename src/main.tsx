@@ -6,6 +6,7 @@ import '@styles/components.css'
 import '@styles/theme-toggle.css'
 import '@styles/skeleton.css'
 import '@styles/interactive.css'
+import '@styles/accessibility.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(

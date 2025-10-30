@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Icon from '@components/icons'
 import BadgeList from '@components/BadgeList'
@@ -19,13 +19,26 @@ export default function ProjectModal({
   onClose,
 }: ProjectModalProps) {
   const prefersReducedMotion = useReducedMotion()
+  const modalRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     if (isOpen && project) {
       trackProjectInteraction(project.id, 'view')
       document.body.style.overflow = 'hidden'
+      previousFocusRef.current = document.activeElement as HTMLElement
+
+      setTimeout(() => {
+        closeButtonRef.current?.focus()
+      }, 100)
     } else {
       document.body.style.overflow = ''
+
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus()
+        previousFocusRef.current = null
+      }
     }
 
     return () => {
@@ -43,6 +56,36 @@ export default function ProjectModal({
     document.addEventListener('keydown', handleEscape)
     return () => document.removeEventListener('keydown', handleEscape)
   }, [isOpen, onClose])
+
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return
+
+    const modal = modalRef.current
+    const focusableElements = modal.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    const firstFocusable = focusableElements[0]
+    const lastFocusable = focusableElements[focusableElements.length - 1]
+
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault()
+          lastFocusable.focus()
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault()
+          firstFocusable.focus()
+        }
+      }
+    }
+
+    modal.addEventListener('keydown', handleTabKey)
+    return () => modal.removeEventListener('keydown', handleTabKey)
+  }, [isOpen])
 
   const handleClose = () => {
     if (project) {
@@ -75,21 +118,26 @@ export default function ProjectModal({
           animate="visible"
           exit="hidden"
           variants={fadeIn}
+          role="presentation"
         >
           <motion.div
-            className="project-modal"
+            ref={modalRef}
+            className="project-modal focus-trap-container"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
+            aria-describedby="modal-description"
             variants={prefersReducedMotion ? fadeIn : scaleIn}
             onClick={(e) => e.stopPropagation()}
           >
             <button
+              ref={closeButtonRef}
               className="project-modal__close"
               onClick={handleClose}
-              aria-label="Close modal"
+              aria-label="Close project details modal"
+              type="button"
             >
-              <Icon name="close" />
+              <Icon name="close" aria-hidden="true" />
             </button>
 
             <div className="project-modal__content">
@@ -98,11 +146,16 @@ export default function ProjectModal({
                   {project.title}
                 </h2>
                 {project.year && (
-                  <span className="project-modal__year">{project.year}</span>
+                  <span
+                    className="project-modal__year"
+                    aria-label={`Year: ${project.year}`}
+                  >
+                    {project.year}
+                  </span>
                 )}
               </div>
 
-              <p className="project-modal__description">
+              <p id="modal-description" className="project-modal__description">
                 {project.description}
               </p>
 

@@ -11,12 +11,29 @@ export default function SkillBar({ name, level, delay = 0 }: SkillBarProps) {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <div className="skill-bar">
+    <div className="skill-bar" role="group" aria-label={`${name} skill level`}>
       <div className="skill-bar__header">
-        <span className="skill-bar__name">{name}</span>
-        <span className="skill-bar__level">{level}%</span>
+        <span
+          className="skill-bar__name"
+          id={`skill-${name.toLowerCase().replace(/\s+/g, '-')}`}
+        >
+          {name}
+        </span>
+        <span
+          className="skill-bar__level"
+          aria-label={`${level} percent proficiency`}
+        >
+          {level}%
+        </span>
       </div>
-      <div className="skill-bar__track">
+      <div
+        className="skill-bar__track"
+        role="progressbar"
+        aria-valuenow={level}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-labelledby={`skill-${name.toLowerCase().replace(/\s+/g, '-')}`}
+      >
         <motion.div
           className="skill-bar__fill"
           initial={{ width: 0 }}
@@ -31,8 +48,12 @@ export default function SkillBar({ name, level, delay = 0 }: SkillBarProps) {
                   ease: [0.4, 0, 0.2, 1],
                 }
           }
+          aria-hidden="true"
         />
       </div>
+      <span className="sr-only">
+        {name}: {level}% proficiency
+      </span>
     </div>
   )
 }
