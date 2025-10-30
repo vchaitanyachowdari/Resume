@@ -24,6 +24,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaArrowRight,
+  FaSyncAlt,
 } from 'react-icons/fa'
 
 const icons = {
@@ -52,6 +53,7 @@ const icons = {
   'chevron-left': FaChevronLeft,
   'chevron-right': FaChevronRight,
   'arrow-right': FaArrowRight,
+  refresh: FaSyncAlt,
 }
 
 export type IconName = keyof typeof icons

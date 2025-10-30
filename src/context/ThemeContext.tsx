@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { trackThemeToggle } from '@utils/analytics'
 
 type Theme = 'light' | 'dark'
 
@@ -82,7 +83,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, [])
 
   const toggleTheme = useCallback(() => {
-    setThemeState((prev) => (prev === 'light' ? 'dark' : 'light'))
+    setThemeState((prev) => {
+      const newTheme = prev === 'light' ? 'dark' : 'light'
+      trackThemeToggle(newTheme)
+      return newTheme
+    })
   }, [])
 
   const value = {

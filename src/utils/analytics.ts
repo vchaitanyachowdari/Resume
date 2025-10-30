@@ -1,3 +1,5 @@
+import { trackGA4Event } from './ga4'
+
 export interface AnalyticsEvent {
   category: string
   action: string
@@ -6,70 +8,57 @@ export interface AnalyticsEvent {
 }
 
 export function trackEvent(event: AnalyticsEvent): void {
-  if (typeof window !== 'undefined') {
-    console.log('[Analytics Event]', event)
-
-    if (window.gtag) {
-      window.gtag('event', event.action, {
-        event_category: event.category,
-        event_label: event.label,
-        value: event.value,
-      })
-    }
-
-    if (window.dataLayer) {
-      window.dataLayer.push({
-        event: event.action,
-        eventCategory: event.category,
-        eventLabel: event.label,
-        eventValue: event.value,
-      })
-    }
-  }
+  trackGA4Event(event.action, {
+    event_category: event.category,
+    event_label: event.label,
+    value: event.value,
+  })
 }
 
 export function trackDownload(fileName: string): void {
-  trackEvent({
-    category: 'Download',
-    action: 'resume_download',
-    label: fileName,
+  trackGA4Event('resume_download', {
+    file_name: fileName,
+    event_category: 'engagement',
   })
 }
 
 export function trackFormSubmission(formName: string, success: boolean): void {
-  trackEvent({
-    category: 'Form',
-    action: success ? 'form_submission_success' : 'form_submission_error',
-    label: formName,
-  })
+  trackGA4Event(
+    success ? 'form_submission_success' : 'form_submission_error',
+    {
+      form_name: formName,
+      event_category: 'engagement',
+      success: success,
+    },
+    { allowDuplicates: false }
+  )
 }
 
 export function trackProjectInteraction(
   projectId: string,
   interactionType: 'view' | 'click' | 'close'
 ): void {
-  trackEvent({
-    category: 'Project',
-    action: `project_${interactionType}`,
-    label: projectId,
+  trackGA4Event(`project_${interactionType}`, {
+    project_id: projectId,
+    interaction_type: interactionType,
+    event_category: 'engagement',
   })
 }
 
 export function trackSocialClick(platform: string): void {
-  trackEvent({
-    category: 'Social',
-    action: 'social_click',
-    label: platform,
+  trackGA4Event('social_click', {
+    platform: platform,
+    event_category: 'engagement',
   })
 }
 
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: Record<string, unknown>
-    ) => void
-    dataLayer?: Array<Record<string, unknown>>
-  }
+export function trackThemeToggle(theme: 'light' | 'dark'): void {
+  trackGA4Event(
+    'theme_toggle',
+    {
+      theme: theme,
+      event_category: 'user_preference',
+    },
+    { allowDuplicates: false }
+  )
 }
