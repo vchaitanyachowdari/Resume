@@ -120,30 +120,36 @@ export default function ResumePage() {
       />
       <ResumeLayout navigation={navigation}>
         <HeroSection />
-        <div className="resume-grid">
-          <AboutSection className="resume-grid__sidebar" />
-          <ExperienceSection className="resume-grid__main" />
-          <LazySection
-            importFn={() => import('@sections/ProjectsSection')}
-            className="resume-grid__main"
-            preloadDistance={300}
-          />
-          <SkillsSection className="resume-grid__sidebar" />
-          <LazySection
-            importFn={() => import('@sections/EducationSection')}
+        <div className="resume-grid" role="region" aria-label="Resume content">
+          <aside
             className="resume-grid__sidebar"
-            preloadDistance={300}
-          />
-          <LazySection
-            importFn={() => import('@sections/CertificationsSection')}
+            aria-label="Personal information and qualifications"
+          >
+            <AboutSection />
+            <SkillsSection />
+            <LazySection
+              importFn={() => import('@sections/EducationSection')}
+              preloadDistance={300}
+            />
+            <LazySection
+              importFn={() => import('@sections/HobbiesSection')}
+              preloadDistance={300}
+            />
+          </aside>
+          <section
             className="resume-grid__main"
-            preloadDistance={300}
-          />
-          <LazySection
-            importFn={() => import('@sections/HobbiesSection')}
-            className="resume-grid__sidebar"
-            preloadDistance={300}
-          />
+            aria-label="Professional experience and projects"
+          >
+            <ExperienceSection />
+            <LazySection
+              importFn={() => import('@sections/ProjectsSection')}
+              preloadDistance={300}
+            />
+            <LazySection
+              importFn={() => import('@sections/CertificationsSection')}
+              preloadDistance={300}
+            />
+          </section>
           <LazySection
             importFn={() => import('@sections/ContactSection')}
             className="resume-grid__full"
