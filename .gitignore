@@ -37,3 +37,12 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Test results
+test-results/
+playwright-report/
+playwright/.cache/
