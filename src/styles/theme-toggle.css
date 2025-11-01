@@ -51,6 +51,7 @@
 
 .theme-toggle__label {
   white-space: nowrap;
+  line-height: 1.4;
 }
 
 @media (max-width: 768px) {

@@ -17,6 +17,7 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--color-text-primary);
+  line-height: 1.4;
 }
 
 .contact-form__required {
@@ -56,15 +57,17 @@
 
 .contact-form__error {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   margin-top: 0.5rem;
   font-size: 0.875rem;
   color: var(--color-accent-error);
+  line-height: 1.5;
 }
 
 .contact-form__error-icon {
   flex-shrink: 0;
+  margin-top: 0.125rem;
 }
 
 .contact-form__message {
@@ -72,9 +75,15 @@
   margin-bottom: 1.5rem;
   border-radius: var(--radius-md);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.contact-form__message-icon {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
 }
 
 .contact-form__message--success {
@@ -146,17 +155,23 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
+  gap: 1rem;
 }
 
 .skill-bar__name {
   font-weight: 500;
   color: var(--color-text-primary);
+  line-height: 1.4;
+  flex: 1;
 }
 
 .skill-bar__level {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-accent-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.4;
 }
 
 .skill-bar__track {
@@ -222,7 +237,8 @@
 .project-carousel__card-header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 
@@ -231,6 +247,8 @@
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0;
+  line-height: 1.3;
+  flex: 1;
 }
 
 .project-carousel__card-year {
@@ -240,6 +258,9 @@
   padding: 0.25rem 0.75rem;
   background: var(--color-bg-primary);
   border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.4;
 }
 
 .project-carousel__card-description {
@@ -374,7 +395,8 @@
 .project-modal__header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
+  gap: 1rem;
   margin-bottom: 1.5rem;
   padding-right: 2rem;
 }
@@ -384,6 +406,8 @@
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0;
+  line-height: 1.3;
+  flex: 1;
 }
 
 .project-modal__year {
@@ -393,6 +417,9 @@
   padding: 0.25rem 0.75rem;
   background: var(--color-bg-primary);
   border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.4;
 }
 
 .project-modal__description {

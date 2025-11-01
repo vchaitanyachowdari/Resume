@@ -50,6 +50,7 @@
   font-weight: var(--font-weight-semibold);
   margin: 0 0 var(--space-2) 0;
   color: var(--color-text-primary);
+  line-height: 1.4;
 }
 
 .pwa-prompt--offline .pwa-prompt__title {
@@ -201,6 +202,7 @@
 
 .offline-indicator__text {
   white-space: nowrap;
+  line-height: 1.4;
 }
 
 /* Responsive adjustments */
