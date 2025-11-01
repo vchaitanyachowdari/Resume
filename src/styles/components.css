@@ -21,6 +21,9 @@
     color var(--transition-base);
   border: none;
   white-space: nowrap;
+  min-height: var(--touch-target-min);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .btn:hover {
@@ -35,6 +38,21 @@
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: var(--touch-target-comfortable);
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
 }
 
 .btn--primary {
@@ -328,6 +346,8 @@
     color var(--transition-base),
     transform var(--transition-base),
     box-shadow var(--transition-base);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .icon-btn:hover {
@@ -335,6 +355,23 @@
   color: var(--color-text-inverted);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .icon-btn {
+    width: var(--touch-target-comfortable);
+    height: var(--touch-target-comfortable);
+  }
+
+  .icon-btn:hover {
+    transform: none;
+  }
+
+  .icon-btn:active {
+    background-color: var(--color-accent-primary);
+    color: var(--color-text-inverted);
+    transform: scale(0.95);
+  }
 }
 
 .icon-btn--sm {
