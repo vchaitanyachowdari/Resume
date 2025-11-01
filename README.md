@@ -59,15 +59,24 @@ The development server will start at `http://localhost:5173/`
 │   │   ├── fonts.css   # @font-face declarations
 │   │   ├── tokens.css  # Design tokens and theme variables
 │   │   └── global.css  # CSS custom properties and resets
+│   ├── test/           # Test setup and utilities
+│   │   ├── setup.ts    # Vitest setup and global mocks
+│   │   └── test-utils.tsx # Custom render with providers
 │   ├── utils/          # Utility functions
 │   │   └── structuredData.ts # JSON-LD schema generators
 │   ├── App.tsx         # Main application component
 │   ├── main.tsx        # Application entry point
 │   └── vite-env.d.ts   # Vite TypeScript declarations
+├── e2e/                # End-to-end tests
+│   ├── routing.spec.ts # Navigation and routing tests
+│   ├── contact-form.spec.ts # Form submission tests
+│   └── theme-persistence.spec.ts # Theme toggle tests
 ├── scripts/            # Build scripts
 │   └── generate-sitemap.js # Sitemap generation script
 ├── index.html          # HTML entry point
 ├── vite.config.ts      # Vite configuration with path aliases
+├── vitest.config.ts    # Vitest test configuration
+├── playwright.config.ts # Playwright E2E test configuration
 ├── vite-plugin-sitemap.ts # Custom Vite plugin for sitemap
 ├── tsconfig.json       # TypeScript configuration
 ├── eslint.config.js    # ESLint configuration
@@ -119,6 +128,162 @@ The development server will start at `http://localhost:5173/`
 - **Prettier 3.4** - Code formatting
 - **Husky 9.1** - Git hooks
 - **lint-staged 15.3** - Pre-commit linting
+
+### Testing
+
+- **Vitest 4.0** - Unit and integration testing (Jest-compatible API)
+- **@testing-library/react 16.3** - React component testing
+- **@testing-library/jest-dom 6.9** - Custom matchers for DOM nodes
+- **@testing-library/user-event 14.6** - User interaction simulation
+- **Playwright 1.56** - End-to-end testing across browsers
+- **@vitest/ui** - Interactive test UI
+
+## 🧪 Testing
+
+This project includes comprehensive testing coverage for critical components and workflows.
+
+### Unit & Integration Tests
+
+Unit tests are written using **Vitest** with **React Testing Library**, covering:
+
+- **HeroSection** - Rendering, social links, download tracking, accessibility
+- **SectionNav** - Navigation items, routing, active states, keyboard accessibility
+- **ContactForm** - Form validation, submission, error handling, accessibility
+- **ThemeToggle** - Theme switching, persistence, keyboard navigation
+
+```bash
+# Run tests in watch mode
+npm run test
+
+# Run tests once
+npm run test:run
+
+# View test UI
+npm run test:ui
+
+# Generate coverage report
+npm run test:coverage
+```
+
+**Coverage Thresholds:**
+- Lines: 60%
+- Functions: 60%
+- Branches: 60%
+- Statements: 60%
+
+Tests are located in `__tests__` directories next to the components they test:
+```
+src/
+  components/
+    __tests__/
+      ContactForm.test.tsx
+      ThemeToggle.test.tsx
+  sections/
+    __tests__/
+      HeroSection.test.tsx
+```
+
+### End-to-End Tests
+
+E2E tests are written using **Playwright** and cover:
+
+- **Routing** - Navigation between sections, browser history, invalid routes
+- **Contact Form** - Form submission with mocked API, validation, accessibility
+- **Theme Persistence** - Theme toggling, localStorage persistence, page navigation
+
+```bash
+# Run all E2E tests (headless)
+npm run test:e2e
+
+# Run E2E tests with UI
+npm run test:e2e:ui
+
+# Run E2E tests in headed mode (visible browser)
+npm run test:e2e:headed
+
+# Run E2E tests in specific browser
+npm run test:e2e:chromium
+```
+
+E2E tests are located in the `e2e/` directory:
+```
+e2e/
+  routing.spec.ts
+  contact-form.spec.ts
+  theme-persistence.spec.ts
+```
+
+**Browsers Tested:**
+- Chromium (Desktop)
+- Firefox (Desktop)
+- WebKit (Desktop)
+- Mobile Chrome (Pixel 5)
+- Mobile Safari (iPhone 12)
+
+### Running Tests Locally
+
+#### Prerequisites
+For E2E tests, Playwright browsers need to be installed:
+
+```bash
+npx playwright install
+```
+
+#### Quick Test Commands
+
+```bash
+# Run all unit tests with coverage
+npm run test:coverage
+
+# Run E2E tests in Chromium only (fastest)
+# Note: For local E2E testing, first start the dev server in a separate terminal:
+# Terminal 1: npm run dev
+# Terminal 2: npm run test:e2e:chromium
+npm run test:e2e:chromium
+
+# In CI, E2E tests automatically build and preview the app
+CI=true npm run test:e2e
+
+# Run all tests (unit + E2E)
+npm run test:run && CI=true npm run test:e2e
+```
+
+### CI/CD Integration
+
+Tests are automatically run on every pull request via GitHub Actions:
+
+1. **Lint and Type Check** - ESLint, TypeScript, Prettier
+2. **Unit Tests** - Run all unit tests with coverage reporting
+3. **E2E Tests** - Run Playwright tests in Chromium (headless)
+4. **Build Check** - Verify production build succeeds
+
+The CI workflow fails if:
+- Linting errors exist
+- Type checking fails
+- Any test fails
+- Build fails
+
+See `.github/workflows/ci.yml` for the complete workflow configuration.
+
+### Test Utilities
+
+Custom test utilities are provided in `src/test/test-utils.tsx` to wrap components with necessary providers:
+
+```typescript
+import { render, screen } from '@test/test-utils'
+import MyComponent from './MyComponent'
+
+test('renders component', () => {
+  render(<MyComponent />)
+  expect(screen.getByText('Hello')).toBeInTheDocument()
+})
+```
+
+The custom render includes:
+- React Router
+- React Query Client
+- Theme Provider
+- Helmet Provider
 
 ## 🎨 Design System
 
@@ -297,6 +462,16 @@ npm run lint:fix        # Fix ESLint errors
 npm run format          # Format code with Prettier
 npm run format:check    # Check code formatting
 npm run type-check      # Run TypeScript compiler (no emit)
+
+# Testing
+npm run test            # Run unit tests in watch mode
+npm run test:run        # Run unit tests once
+npm run test:ui         # Run tests with Vitest UI
+npm run test:coverage   # Generate coverage report
+npm run test:e2e        # Run E2E tests with Playwright
+npm run test:e2e:ui     # Run E2E tests with Playwright UI
+npm run test:e2e:headed # Run E2E tests in headed mode
+npm run test:e2e:chromium # Run E2E tests in Chromium only
 ```
 
 ### Path Aliases
