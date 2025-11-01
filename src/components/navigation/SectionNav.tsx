@@ -8,10 +8,12 @@ interface SectionNavProps {
 }
 
 export default function SectionNav({ items, activeId }: SectionNavProps) {
+  const mainNavItems = items.filter((item) => item.id !== 'footer')
+
   return (
     <nav className="section-nav" aria-label="Resume sections">
       <ul className="section-nav__list">
-        {items.map((item) => {
+        {mainNavItems.map((item) => {
           const to = item.id === 'hero' ? '/' : `/${item.id}`
           const isActive = activeId ? activeId === item.id : false
 

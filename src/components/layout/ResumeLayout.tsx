@@ -15,20 +15,17 @@ export default function ResumeLayout({
     <div className="resume-layout">
       <SkipNav />
       <div className="resume-layout__background" aria-hidden="true" />
-      <div className="resume-layout__container">
-        <aside
-          className="resume-layout__sidebar"
-          aria-label="Navigation and theme"
-        >
+      <header className="resume-layout__header">
+        <div className="resume-layout__header-container">
+          {navigation}
           <div className="resume-layout__theme-toggle">
             <ThemeToggle />
           </div>
-          {navigation}
-        </aside>
-        <main id="main-content" className="resume-layout__content">
-          {children}
-        </main>
-      </div>
+        </div>
+      </header>
+      <main id="main-content" className="resume-layout__content">
+        {children}
+      </main>
     </div>
   )
 }

@@ -75,7 +75,7 @@ select:focus-visible:invalid {
   top: -100px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: var(--z-index-tooltip);
+  z-index: 9999;
   padding: var(--space-3) var(--space-6);
   background-color: var(--color-accent-primary);
   color: var(--color-text-inverted);

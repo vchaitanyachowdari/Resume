@@ -22,7 +22,7 @@ export interface SectionNavItem {
 }
 
 export const sectionNavItems: SectionNavItem[] = [
-  { id: 'hero', label: 'Hero', icon: 'user' },
+  { id: 'hero', label: 'Home', icon: 'user' },
   { id: 'about', label: 'About', icon: 'info' },
   { id: 'experience', label: 'Experience', icon: 'suitcase' },
   { id: 'projects', label: 'Projects', icon: 'code' },
