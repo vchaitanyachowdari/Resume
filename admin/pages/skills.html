@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skills — VC Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+</head>
+
+<body>
+    <div class="admin-shell">
+        <div id="sidebarMount"></div>
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-btn" style="display:none" id="mobileSidebarBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div>
+                        <h2 class="page-title">Skills</h2>
+                        <div class="breadcrumb">Dashboard <span>›</span> Skills</div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" id="themeToggle"><span class="theme-icon">☀️</span></button>
+                    <div class="topbar-user" data-dropdown="topDrop" style="position:relative">
+                        <div class="user-avatar" style="width:30px;height:30px;font-size:12px"><span
+                                class="user-initials">VC</span></div>
+                        <span class="topbar-user-name user-display-name">V Chaitanya</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <div class="dropdown-menu" id="topDrop">
+                            <div class="dropdown-item danger" data-logout>🚪 Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Skills Manager</h1>
+                        <p>Manage your technical skills and proficiency levels</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button class="btn btn-primary" onclick="openAddModal()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                            Add Skill
+                        </button>
+                    </div>
+                </div>
+
+                <div id="skillsGrid" class="grid-auto"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ADD/EDIT SKILL MODAL -->
+    <div class="modal-overlay" id="skillModal">
+        <div class="modal" style="max-width:480px">
+            <div class="modal-header">
+                <h3 class="modal-title" id="skillModalTitle">Add Skill</h3>
+                <button class="modal-close" onclick="Modal.hide('skillModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editCatId" />
+                <input type="hidden" id="editSkillIdx" />
+                <div class="form-group">
+                    <label class="form-label">Skill Category</label>
+                    <select class="form-select" id="sCategory">
+                        <option>Frontend</option>
+                        <option>Backend</option>
+                        <option>AI/ML</option>
+                        <option>DevOps & Cloud</option>
+                        <option>Mobile</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Skill Name *</label>
+                    <input type="text" class="form-input" id="sName" placeholder="e.g. React" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Proficiency Level: <strong id="levelVal">80</strong>%</label>
+                    <input type="range" class="range-slider" id="sLevel" min="10" max="100" value="80"
+                        oninput="document.getElementById('levelVal').textContent=this.value" />
+                    <div
+                        style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px">
+                        <span>Beginner</span><span>Intermediate</span><span>Expert</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('skillModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSkill()">Save Skill</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM DELETE -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal modal-sm">
+            <div class="modal-body" style="text-align:center;padding-top:32px">
+                <div class="confirm-icon">🗑️</div>
+                <div class="confirm-title">Delete Skill?</div>
+                <p class="confirm-text">This skill will be permanently removed.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('confirmModal')">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script>
+        Auth.requireAuth('../login.html');
+        initPage();
+
+        let deleteTarget = null;
+
+        const catColors = { 'Frontend': 'indigo', 'Backend': 'cyan', 'AI/ML': 'purple', 'DevOps & Cloud': 'green', 'Mobile': 'yellow', 'Other': 'gray' };
+
+        function renderSkills() {
+            const skills = CMS.get('skills');
+            const grid = document.getElementById('skillsGrid');
+            if (!skills.length) {
+                grid.innerHTML = `<div class="empty-state"><div class="empty-icon">⚡</div><div class="empty-title">No skills yet</div></div>`;
+                return;
+            }
+            grid.innerHTML = skills.map(cat => `
+      <div class="card fade-in-up">
+        <div class="card-header">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="badge badge-${catColors[cat.category] || 'gray'}">${cat.category}</span>
+            <span class="td-muted" style="font-size:12px">${cat.skills.length} skills</span>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openAddSkillModal(${cat.id})">+ Add</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          ${cat.skills.map((s, i) => `
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:13px;font-weight:600;color:var(--text-primary)">${escapeHtml(s.name)}</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:12px;font-weight:700;color:var(--accent-primary)">${s.level}%</span>
+                  <button class="btn btn-ghost btn-icon" style="width:24px;height:24px" onclick="openEditSkillModal(${cat.id},${i})" title="Edit">✏️</button>
+                  <button class="btn btn-ghost btn-icon" style="width:24px;height:24px" onclick="deleteSkill(${cat.id},${i})" title="Delete">🗑️</button>
+                </div>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="width:${s.level}%"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+        }
+
+        renderSkills();
+
+        function openAddModal() { openAddSkillModal(null); }
+        function openAddSkillModal(catId) {
+            document.getElementById('skillModalTitle').textContent = 'Add Skill';
+            document.getElementById('editCatId').value = catId || '';
+            document.getElementById('editSkillIdx').value = '';
+            document.getElementById('sName').value = '';
+            document.getElementById('sLevel').value = 80;
+            document.getElementById('levelVal').textContent = 80;
+            Modal.show('skillModal');
+        }
+        function openEditSkillModal(catId, idx) {
+            const cat = CMS.get('skills').find(c => c.id === catId);
+            if (!cat) return;
+            const skill = cat.skills[idx];
+            document.getElementById('skillModalTitle').textContent = 'Edit Skill';
+            document.getElementById('editCatId').value = catId;
+            document.getElementById('editSkillIdx').value = idx;
+            document.getElementById('sCategory').value = cat.category;
+            document.getElementById('sName').value = skill.name;
+            document.getElementById('sLevel').value = skill.level;
+            document.getElementById('levelVal').textContent = skill.level;
+            Modal.show('skillModal');
+        }
+        function saveSkill() {
+            const name = document.getElementById('sName').value.trim();
+            if (!name) { Toast.error('Skill name is required'); return; }
+            const level = parseInt(document.getElementById('sLevel').value);
+            const catName = document.getElementById('sCategory').value;
+            const catId = parseInt(document.getElementById('editCatId').value) || null;
+            const skillIdx = document.getElementById('editSkillIdx').value;
+            let skills = CMS.get('skills');
+
+            if (skillIdx !== '') {
+                // Edit existing
+                const cat = skills.find(c => c.id === catId);
+                if (cat) { cat.skills[parseInt(skillIdx)] = { name, level }; CMS.set('skills', skills); }
+                Toast.success('Skill updated');
+            } else if (catId) {
+                // Add to existing category
+                const cat = skills.find(c => c.id === catId);
+                if (cat) { cat.skills.push({ name, level }); CMS.set('skills', skills); }
+                Toast.success('Skill added');
+            } else {
+                // Add new category
+                const maxId = skills.reduce((m, c) => Math.max(m, c.id), 0);
+                skills.push({ id: maxId + 1, category: catName, skills: [{ name, level }] });
+                CMS.set('skills', skills);
+                Toast.success('Skill category and skill added');
+            }
+            Modal.hide('skillModal');
+            renderSkills();
+        }
+        function deleteSkill(catId, idx) {
+            deleteTarget = { catId, idx };
+            Modal.show('confirmModal');
+        }
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            if (!deleteTarget) return;
+            let skills = CMS.get('skills');
+            const cat = skills.find(c => c.id === deleteTarget.catId);
+            if (cat) {
+                cat.skills.splice(deleteTarget.idx, 1);
+                if (cat.skills.length === 0) skills = skills.filter(c => c.id !== deleteTarget.catId);
+                CMS.set('skills', skills);
+            }
+            Modal.hide('confirmModal');
+            Toast.success('Skill deleted');
+            renderSkills();
+        });
+        function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users — VC Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+</head>
+
+<body>
+    <div class="admin-shell">
+        <div id="sidebarMount"></div>
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-btn" style="display:none" id="mobileSidebarBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div>
+                        <h2 class="page-title">Users</h2>
+                        <div class="breadcrumb">Dashboard <span>›</span> Users</div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" id="themeToggle"><span class="theme-icon">☀️</span></button>
+                    <div class="topbar-user" data-dropdown="topDrop" style="position:relative">
+                        <div class="user-avatar" style="width:30px;height:30px;font-size:12px"><span
+                                class="user-initials">VC</span></div>
+                        <span class="topbar-user-name user-display-name">V Chaitanya</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <div class="dropdown-menu" id="topDrop">
+                            <div class="dropdown-item danger" data-logout>🚪 Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>User Management</h1>
+                        <p>Manage admin portal access and roles</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Invite User
+                    </button>
+                </div>
+
+                <div class="card" style="padding:0;overflow:hidden">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ADD/EDIT MODAL -->
+    <div class="modal-overlay" id="userModal">
+        <div class="modal" style="max-width:480px">
+            <div class="modal-header">
+                <h3 class="modal-title" id="userModalTitle">Invite User</h3>
+                <button class="modal-close" onclick="Modal.hide('userModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="userId" />
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" class="form-input" id="uName" placeholder="Enter full name" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-input" id="uEmail" placeholder="user@example.com" />
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" id="uRole">
+                            <option>Super Admin</option>
+                            <option>Admin</option>
+                            <option>Editor</option>
+                            <option>Viewer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" id="uStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="passwordGroup">
+                    <label class="form-label">Temporary Password</label>
+                    <input type="text" class="form-input" id="uPassword" placeholder="Min 8 chars" />
+                    <div class="form-helper">User will be prompted to change on first login (when connected to backend)
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('userModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveUser()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal modal-sm">
+            <div class="modal-body" style="text-align:center;padding-top:32px">
+                <div class="confirm-icon">🗑️</div>
+                <div class="confirm-title">Remove User?</div>
+                <p class="confirm-text">This user's access will be revoked.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('confirmModal')">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script>
+        Auth.requireAuth('../login.html');
+        initPage();
+        let editingId = null, deleteId = null;
+        const roleBadge = { 'Super Admin': 'badge-red', 'Admin': 'badge-indigo', 'Editor': 'badge-cyan', 'Viewer': 'badge-gray' };
+
+        function renderUsers() {
+            const users = CMS.get('users');
+            const tbody = document.getElementById('usersTbody');
+            tbody.innerHTML = users.map(u => `
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div class="user-avatar" style="background:var(--gradient-primary)">${u.initials || u.name[0]}</div>
+            <div style="font-weight:600;color:var(--text-primary)">${escapeHtml(u.name)}</div>
+          </div>
+        </td>
+        <td class="td-muted">${u.email}</td>
+        <td><span class="badge ${roleBadge[u.role] || 'badge-gray'}">${u.role}</span></td>
+        <td>
+          <label class="toggle-switch" style="cursor:pointer">
+            <div class="toggle-track ${u.status === 'active' ? 'on' : ''}" onclick="toggleStatus(${u.id}, this)"><div class="toggle-thumb"></div></div>
+          </label>
+        </td>
+        <td class="td-muted">${u.lastLogin ? timeAgo(u.lastLogin) : 'Never'}</td>
+        <td>
+          <div class="td-actions">
+            <button class="btn btn-ghost btn-sm" onclick="openEdit(${u.id})">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="delUser(${u.id})">Remove</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+        }
+
+        renderUsers();
+
+        function toggleStatus(id, track) {
+            const users = CMS.get('users');
+            const u = users.find(x => x.id === id);
+            if (!u) return;
+            u.status = u.status === 'active' ? 'inactive' : 'active';
+            CMS.set('users', users);
+            track.classList.toggle('on', u.status === 'active');
+            Toast.info(`User ${u.status === 'active' ? 'activated' : 'deactivated'}`);
+        }
+
+        function openModal() {
+            editingId = null;
+            document.getElementById('userModalTitle').textContent = 'Invite User';
+            ['userId', 'uName', 'uEmail', 'uPassword'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('uRole').value = 'Editor';
+            document.getElementById('uStatus').value = 'active';
+            document.getElementById('passwordGroup').style.display = 'block';
+            Modal.show('userModal');
+        }
+        function openEdit(id) {
+            const u = CMS.get('users').find(x => x.id === id);
+            if (!u) return;
+            editingId = id;
+            document.getElementById('userModalTitle').textContent = 'Edit User';
+            document.getElementById('userId').value = u.id;
+            document.getElementById('uName').value = u.name;
+            document.getElementById('uEmail').value = u.email;
+            document.getElementById('uRole').value = u.role;
+            document.getElementById('uStatus').value = u.status;
+            document.getElementById('passwordGroup').style.display = 'none';
+            Modal.show('userModal');
+        }
+        function saveUser() {
+            const name = document.getElementById('uName').value.trim();
+            const email = document.getElementById('uEmail').value.trim();
+            if (!name || !email) { Toast.error('Name and email are required'); return; }
+            const data = {
+                name, email,
+                role: document.getElementById('uRole').value,
+                status: document.getElementById('uStatus').value,
+                initials: name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2),
+            };
+            if (editingId) { CMS.update('users', editingId, data); Toast.success('User updated'); }
+            else { data.lastLogin = null; CMS.add('users', data); Toast.success('User invited'); }
+            Modal.hide('userModal');
+            renderUsers();
+        }
+        function delUser(id) { deleteId = id; Modal.show('confirmModal'); }
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            CMS.remove('users', deleteId); Modal.hide('confirmModal'); Toast.success('User removed'); renderUsers();
+        });
+        function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    </script>
+</body>
+
+</html>

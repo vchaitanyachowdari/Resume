@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Education — VC Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+</head>
+
+<body>
+    <div class="admin-shell">
+        <div id="sidebarMount"></div>
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-btn" style="display:none" id="mobileSidebarBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div>
+                        <h2 class="page-title">Education</h2>
+                        <div class="breadcrumb">Dashboard <span>›</span> Education</div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" id="themeToggle"><span class="theme-icon">☀️</span></button>
+                    <div class="topbar-user" data-dropdown="topDrop" style="position:relative">
+                        <div class="user-avatar" style="width:30px;height:30px;font-size:12px"><span
+                                class="user-initials">VC</span></div>
+                        <span class="topbar-user-name user-display-name">V Chaitanya</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <div class="dropdown-menu" id="topDrop">
+                            <div class="dropdown-item danger" data-logout>🚪 Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Education & Certifications</h1>
+                        <p>Manage your degrees and certifications</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add Education
+                    </button>
+                </div>
+                <div id="eduGrid" class="grid-auto"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="eduModal">
+        <div class="modal" style="max-width:540px">
+            <div class="modal-header">
+                <h3 class="modal-title" id="eduModalTitle">Add Education</h3>
+                <button class="modal-close" onclick="Modal.hide('eduModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="eduId" />
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Institution *</label>
+                        <input type="text" class="form-input" id="eduInstitution"
+                            placeholder="University / Platform name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Type</label>
+                        <select class="form-select" id="eduType">
+                            <option>Degree</option>
+                            <option>Certification</option>
+                            <option>Bootcamp</option>
+                            <option>Course</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Degree / Certification *</label>
+                        <input type="text" class="form-input" id="eduDegree" placeholder="B.Tech Computer Science" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Year</label>
+                        <input type="text" class="form-input" id="eduYear" placeholder="2024" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Grade / Score</label>
+                    <input type="text" class="form-input" id="eduGrade" placeholder="8.5 CGPA / Certificate" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="eduDesc" rows="3"
+                        placeholder="Key subjects, achievements, thesis..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('eduModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveEdu()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal modal-sm">
+            <div class="modal-body" style="text-align:center;padding-top:32px">
+                <div class="confirm-icon">🗑️</div>
+                <div class="confirm-title">Delete?</div>
+                <p class="confirm-text">This entry will be removed.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('confirmModal')">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script>
+        Auth.requireAuth('../login.html');
+        initPage();
+        let editingId = null, deleteId = null;
+        const typeIcons = { Degree: '🎓', Certification: '🏆', Bootcamp: '💻', Course: '📚' };
+        const typeBadge = { Degree: 'badge-indigo', Certification: 'badge-yellow', Bootcamp: 'badge-cyan', Course: 'badge-purple' };
+
+        function renderEdu() {
+            const list = CMS.get('education');
+            const grid = document.getElementById('eduGrid');
+            if (!list.length) { grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🎓</div><div class="empty-title">No education entries</div></div>`; return; }
+            grid.innerHTML = list.map(e => `
+      <div class="card fade-in-up" style="position:relative">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:16px">
+          <div style="width:48px;height:48px;background:var(--gradient-primary);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">${typeIcons[e.type] || '🎓'}</div>
+          <div style="flex:1">
+            <div style="font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:2px">${escapeHtml(e.degree)}</div>
+            <div style="font-size:13px;color:var(--accent-primary);font-weight:600">${escapeHtml(e.institution)}</div>
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+              <span class="badge ${typeBadge[e.type] || 'badge-gray'}">${e.type}</span>
+              ${e.year ? `<span class="badge badge-gray">📅 ${e.year}</span>` : ''}
+              ${e.grade ? `<span class="badge badge-green">⭐ ${e.grade}</span>` : ''}
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;flex-shrink:0">
+            <button class="btn btn-ghost btn-icon" onclick="openEdit(${e.id})" title="Edit">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="btn btn-danger btn-icon" onclick="delEdu(${e.id})" title="Delete">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+        </div>
+        ${e.description ? `<p style="font-size:13px;color:var(--text-secondary);line-height:1.6">${escapeHtml(e.description)}</p>` : ''}
+      </div>
+    `).join('');
+        }
+
+        renderEdu();
+
+        function openModal() {
+            editingId = null;
+            document.getElementById('eduModalTitle').textContent = 'Add Education';
+            ['eduId', 'eduInstitution', 'eduDegree', 'eduYear', 'eduGrade', 'eduDesc'].forEach(id => { document.getElementById(id).value = ''; });
+            Modal.show('eduModal');
+        }
+        function openEdit(id) {
+            const e = CMS.get('education').find(x => x.id === id);
+            if (!e) return;
+            editingId = id;
+            document.getElementById('eduModalTitle').textContent = 'Edit Education';
+            document.getElementById('eduId').value = e.id;
+            document.getElementById('eduInstitution').value = e.institution;
+            document.getElementById('eduDegree').value = e.degree;
+            document.getElementById('eduType').value = e.type;
+            document.getElementById('eduYear').value = e.year;
+            document.getElementById('eduGrade').value = e.grade;
+            document.getElementById('eduDesc').value = e.description;
+            Modal.show('eduModal');
+        }
+        function saveEdu() {
+            const institution = document.getElementById('eduInstitution').value.trim();
+            const degree = document.getElementById('eduDegree').value.trim();
+            if (!institution || !degree) { Toast.error('Institution and Degree are required'); return; }
+            const data = {
+                institution,
+                degree,
+                type: document.getElementById('eduType').value,
+                year: document.getElementById('eduYear').value.trim(),
+                grade: document.getElementById('eduGrade').value.trim(),
+                description: document.getElementById('eduDesc').value.trim(),
+            };
+            if (editingId) { CMS.update('education', editingId, data); Toast.success('Education updated'); }
+            else { CMS.add('education', data); Toast.success('Education added'); }
+            Modal.hide('eduModal');
+            renderEdu();
+        }
+        function delEdu(id) { deleteId = id; Modal.show('confirmModal'); }
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            CMS.remove('education', deleteId); Modal.hide('confirmModal'); Toast.success('Deleted'); renderEdu();
+        });
+        function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    </script>
+</body>
+
+</html>

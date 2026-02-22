@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experience — VC Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+</head>
+
+<body>
+    <div class="admin-shell">
+        <div id="sidebarMount"></div>
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-btn" style="display:none" id="mobileSidebarBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div>
+                        <h2 class="page-title">Experience</h2>
+                        <div class="breadcrumb">Dashboard <span>›</span> Experience</div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" id="themeToggle"><span class="theme-icon">☀️</span></button>
+                    <div class="topbar-user" data-dropdown="topDrop" style="position:relative">
+                        <div class="user-avatar" style="width:30px;height:30px;font-size:12px"><span
+                                class="user-initials">VC</span></div>
+                        <span class="topbar-user-name user-display-name">V Chaitanya</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <div class="dropdown-menu" id="topDrop">
+                            <div class="dropdown-item danger" data-logout>🚪 Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Work Experience</h1>
+                        <p>Manage your professional experience timeline</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add Experience
+                    </button>
+                </div>
+
+                <div id="expList" style="display:flex;flex-direction:column;gap:16px"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="expModal">
+        <div class="modal" style="max-width:600px">
+            <div class="modal-header">
+                <h3 class="modal-title" id="expModalTitle">Add Experience</h3>
+                <button class="modal-close" onclick="Modal.hide('expModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="expId" />
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Company *</label>
+                        <input type="text" class="form-input" id="expCompany" placeholder="Company name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role *</label>
+                        <input type="text" class="form-input" id="expRole" placeholder="Job title" />
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Employment Type</label>
+                        <select class="form-select" id="expType">
+                            <option>Full-time</option>
+                            <option>Part-time</option>
+                            <option>Freelance</option>
+                            <option>Contract</option>
+                            <option>Internship</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-input" id="expLocation" placeholder="City, Country or Remote" />
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="month" class="form-input" id="expStart" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="month" class="form-input" id="expEnd" />
+                        <div class="form-helper">Leave blank if currently working here</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="expDesc"
+                        placeholder="Describe your responsibilities and achievements..." rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Technologies (comma separated)</label>
+                    <input type="text" class="form-input" id="expTech" placeholder="React, Node.js, PostgreSQL" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('expModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveExp()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal modal-sm">
+            <div class="modal-body" style="text-align:center;padding-top:32px">
+                <div class="confirm-icon">🗑️</div>
+                <div class="confirm-title">Delete Experience?</div>
+                <p class="confirm-text">This entry will be permanently removed.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('confirmModal')">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script>
+        Auth.requireAuth('../login.html');
+        initPage();
+        let editingId = null, deleteId = null;
+
+        function renderExp() {
+            const list = CMS.get('experience');
+            const el = document.getElementById('expList');
+            if (!list.length) {
+                el.innerHTML = `<div class="empty-state"><div class="empty-icon">💼</div><div class="empty-title">No experience entries yet</div></div>`;
+                return;
+            }
+            el.innerHTML = list.map(e => `
+      <div class="card fade-in-up" style="display:flex;gap:20px">
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="width:44px;height:44px;background:var(--gradient-primary);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">💼</div>
+          <div style="width:2px;flex:1;background:var(--border-subtle);margin-top:12px;min-height:20px"></div>
+        </div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+            <div>
+              <div style="font-size:17px;font-weight:700;color:var(--text-primary)">${escapeHtml(e.role)}</div>
+              <div style="color:var(--accent-primary);font-size:14px;font-weight:600">${escapeHtml(e.company)}</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+              <span class="badge ${e.current ? 'badge-green' : 'badge-gray'}">${e.current ? '🟢 Current' : 'Past'}</span>
+              <button class="btn btn-ghost btn-icon" onclick="openEdit(${e.id})" title="Edit">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="btn btn-danger btn-icon" onclick="delExp(${e.id})" title="Delete">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px">
+            📍 ${e.location || 'Remote'} &nbsp;·&nbsp; 🗓️ ${e.start} — ${e.current ? 'Present' : (e.end || '?')} &nbsp;·&nbsp; <span class="badge badge-cyan">${e.type}</span>
+          </div>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">${escapeHtml(e.description)}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            ${(e.technologies || []).map(t => `<span class="badge badge-indigo">${t}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    `).join('');
+        }
+
+        renderExp();
+
+        function openModal() {
+            editingId = null;
+            document.getElementById('expModalTitle').textContent = 'Add Experience';
+            document.getElementById('expId').value = '';
+            document.getElementById('expCompany').value = '';
+            document.getElementById('expRole').value = '';
+            document.getElementById('expType').value = 'Full-time';
+            document.getElementById('expLocation').value = '';
+            document.getElementById('expStart').value = '';
+            document.getElementById('expEnd').value = '';
+            document.getElementById('expDesc').value = '';
+            document.getElementById('expTech').value = '';
+            Modal.show('expModal');
+        }
+        function openEdit(id) {
+            const e = CMS.get('experience').find(x => x.id === id);
+            if (!e) return;
+            editingId = id;
+            document.getElementById('expModalTitle').textContent = 'Edit Experience';
+            document.getElementById('expId').value = e.id;
+            document.getElementById('expCompany').value = e.company;
+            document.getElementById('expRole').value = e.role;
+            document.getElementById('expType').value = e.type;
+            document.getElementById('expLocation').value = e.location || '';
+            document.getElementById('expStart').value = e.start || '';
+            document.getElementById('expEnd').value = e.end || '';
+            document.getElementById('expDesc').value = e.description || '';
+            document.getElementById('expTech').value = (e.technologies || []).join(', ');
+            Modal.show('expModal');
+        }
+        function saveExp() {
+            const company = document.getElementById('expCompany').value.trim();
+            const role = document.getElementById('expRole').value.trim();
+            if (!company || !role) { Toast.error('Company and Role are required'); return; }
+            const endVal = document.getElementById('expEnd').value.trim();
+            const data = {
+                company, role,
+                type: document.getElementById('expType').value,
+                location: document.getElementById('expLocation').value.trim(),
+                start: document.getElementById('expStart').value,
+                end: endVal,
+                current: !endVal,
+                description: document.getElementById('expDesc').value.trim(),
+                technologies: document.getElementById('expTech').value.split(',').map(s => s.trim()).filter(Boolean),
+            };
+            if (editingId) { CMS.update('experience', editingId, data); Toast.success('Experience updated'); }
+            else { CMS.add('experience', data); Toast.success('Experience added'); }
+            Modal.hide('expModal');
+            renderExp();
+        }
+        function delExp(id) { deleteId = id; Modal.show('confirmModal'); }
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            CMS.remove('experience', deleteId);
+            Modal.hide('confirmModal');
+            Toast.success('Experience deleted');
+            renderExp();
+        });
+        function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    </script>
+</body>
+
+</html>

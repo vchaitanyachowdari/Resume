@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — VC Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="admin-shell">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <div class="sidebar-logo">VC</div>
+                    <div class="sidebar-brand-text">
+                        <div class="sidebar-brand-name">VC Admin</div>
+                        <div class="sidebar-brand-sub">CMS Portal</div>
+                    </div>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Collapse sidebar">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Main</div>
+                    <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                        <span class="sidebar-label">Dashboard</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Content</div>
+                    <a href="projects.html" class="nav-item" data-page="projects">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg>
+                        <span class="sidebar-label">Projects</span>
+                    </a>
+                    <a href="skills.html" class="nav-item" data-page="skills">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                        <span class="sidebar-label">Skills</span>
+                    </a>
+                    <a href="experience.html" class="nav-item" data-page="experience">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" />
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                        </svg>
+                        <span class="sidebar-label">Experience</span>
+                    </a>
+                    <a href="education.html" class="nav-item" data-page="education">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                        <span class="sidebar-label">Education</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Manage</div>
+                    <a href="media.html" class="nav-item" data-page="media">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <polyline points="21 15 16 10 5 21" />
+                        </svg>
+                        <span class="sidebar-label">Media</span>
+                    </a>
+                    <a href="messages.html" class="nav-item" data-page="messages">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                        <span class="sidebar-label">Messages</span>
+                        <span class="nav-badge" id="unreadBadge">2</span>
+                    </a>
+                    <a href="users.html" class="nav-item" data-page="users">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        <span class="sidebar-label">Users</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">System</div>
+                    <a href="settings.html" class="nav-item" data-page="settings">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg>
+                        <span class="sidebar-label">Settings</span>
+                    </a>
+                    <a href="../index.html" class="nav-item">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                        <span class="sidebar-label">View Portfolio</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-card" data-dropdown="userDropdownSidebar">
+                    <div class="user-avatar user-initials">VC</div>
+                    <div class="user-info">
+                        <div class="user-name user-display-name">V Chaitanya</div>
+                        <div class="user-role user-display-role">Super Admin</div>
+                    </div>
+                    <svg class="user-menu-btn" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="5" r="1" />
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="12" cy="19" r="1" />
+                    </svg>
+                    <div class="dropdown-menu" id="userDropdownSidebar">
+                        <div class="dropdown-item" onclick="window.location.href='settings.html'">⚙️ Settings</div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item danger" data-logout>🚪 Logout</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-wrapper">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-btn mobile-menu-btn hidden" id="mobileSidebarBtn" aria-label="Open menu"
+                        style="display:none">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div>
+                        <h2 class="page-title">Dashboard</h2>
+                        <div class="breadcrumb">Home <span>›</span> Overview</div>
+                    </div>
+                    <div class="topbar-search">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <input type="text" placeholder="Search anything..." />
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" id="themeToggle" aria-label="Toggle theme">
+                        <span class="theme-icon">☀️</span>
+                    </button>
+                    <button class="topbar-btn" style="position:relative" title="Notifications">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <span class="notif-badge"></span>
+                    </button>
+                    <div class="topbar-user" data-dropdown="userDropdownTop" style="position:relative">
+                        <div class="user-avatar" style="width:30px;height:30px;font-size:12px"><span
+                                class="user-initials">VC</span></div>
+                        <span class="topbar-user-name user-display-name">V Chaitanya</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <div class="dropdown-menu" id="userDropdownTop">
+                            <div class="dropdown-item" onclick="window.location.href='settings.html'">👤 Profile</div>
+                            <div class="dropdown-item" onclick="window.location.href='settings.html'">⚙️ Settings</div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item danger" data-logout>🚪 Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PAGE CONTENT -->
+            <main class="page-content">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner card mb-6"
+                    style="background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(168,85,247,0.08));border-color:rgba(99,102,241,0.2);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;">
+                    <div>
+                        <h2 style="font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:6px">Good
+                            evening, <span id="welcomeName"
+                                style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">V
+                                Chaitanya</span> 👋</h2>
+                        <p style="color:var(--text-secondary);font-size:14px">Here's what's happening with your
+                            portfolio today.</p>
+                    </div>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap">
+                        <a href="projects.html" class="btn btn-primary btn-sm">+ Add Project</a>
+                        <a href="messages.html" class="btn btn-secondary btn-sm">View Messages</a>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card fade-in-up" style="animation-delay:0s">
+                        <div class="stat-icon indigo">📁</div>
+                        <div class="stat-body">
+                            <div class="stat-value" id="statProjects">5</div>
+                            <div class="stat-label">Total Projects</div>
+                            <div class="stat-change up">↑ 2 this month</div>
+                        </div>
+                    </div>
+                    <div class="stat-card fade-in-up" style="animation-delay:0.08s">
+                        <div class="stat-icon purple">⚡</div>
+                        <div class="stat-body">
+                            <div class="stat-value" id="statSkills">20</div>
+                            <div class="stat-label">Skills Listed</div>
+                            <div class="stat-change up">↑ 3 added</div>
+                        </div>
+                    </div>
+                    <div class="stat-card fade-in-up" style="animation-delay:0.16s">
+                        <div class="stat-icon green">📊</div>
+                        <div class="stat-body">
+                            <div class="stat-value">1,455</div>
+                            <div class="stat-label">Page Views (7d)</div>
+                            <div class="stat-change up">↑ 18.4%</div>
+                        </div>
+                    </div>
+                    <div class="stat-card fade-in-up" style="animation-delay:0.24s">
+                        <div class="stat-icon yellow">💬</div>
+                        <div class="stat-body">
+                            <div class="stat-value" id="statMessages">5</div>
+                            <div class="stat-label">Messages</div>
+                            <div class="stat-change up"><span id="statUnread">2</span> unread</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid-2 mb-6">
+                    <!-- Page Views Chart -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Page Views</div>
+                                <div class="card-subtitle">Last 7 days</div>
+                            </div>
+                            <span class="badge badge-green"><span class="dot"></span> Live</span>
+                        </div>
+                        <div class="chart-container" style="height:220px">
+                            <canvas id="viewsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Content Breakdown Donut -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Content Breakdown</div>
+                                <div class="card-subtitle">By category</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:24px">
+                            <div class="chart-container" style="height:200px;width:200px;flex-shrink:0">
+                                <canvas id="donutChart"></canvas>
+                            </div>
+                            <div id="donutLegend" style="display:flex;flex-direction:column;gap:10px;flex:1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: Recent Projects + Activity -->
+                <div class="grid-2">
+                    <!-- Recent Projects Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Recent Projects</div>
+                            <a href="projects.html" class="btn btn-ghost btn-sm">View All →</a>
+                        </div>
+                        <div id="recentProjects"></div>
+                    </div>
+
+                    <!-- Activity Feed -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Recent Activity</div>
+                            <span class="badge badge-indigo">Live</span>
+                        </div>
+                        <div class="activity-feed" id="activityFeed"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:250;display:none" id="sidebarOverlay"></div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+        // Auth guard
+        const session = Auth.requireAuth('../login.html');
+        if (session) {
+            document.getElementById('welcomeName').textContent = session.name;
+            initPage();
+        }
+
+        // Load stats
+        const projects = CMS.get('projects');
+        const skills = CMS.get('skills');
+        const messages = CMS.get('messages');
+        const pageViews = CMS.get('pageViews');
+        const unreadMsgs = messages.filter(m => m.status === 'unread').length;
+        const skillCount = skills.reduce((t, cat) => t + cat.skills.length, 0);
+
+        document.getElementById('statProjects').textContent = projects.length;
+        document.getElementById('statSkills').textContent = skillCount;
+        document.getElementById('statMessages').textContent = messages.length;
+        document.getElementById('statUnread').textContent = unreadMsgs;
+        document.getElementById('unreadBadge').textContent = unreadMsgs;
+        if (unreadMsgs === 0) document.getElementById('unreadBadge').style.display = 'none';
+
+        // Chart.js defaults
+        const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+        const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+        const labelColor = isDark ? '#64748b' : '#94a3b8';
+
+        // Views Line Chart
+        const viewsCtx = document.getElementById('viewsChart').getContext('2d');
+        const gradient = viewsCtx.createLinearGradient(0, 0, 0, 220);
+        gradient.addColorStop(0, 'rgba(99,102,241,0.25)');
+        gradient.addColorStop(1, 'rgba(99,102,241,0)');
+
+        new Chart(viewsCtx, {
+            type: 'line',
+            data: {
+                labels: pageViews.map(d => new Date(d.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })),
+                datasets: [{
+                    label: 'Views',
+                    data: pageViews.map(d => d.views),
+                    borderColor: '#6366f1',
+                    backgroundColor: gradient,
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#6366f1',
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    tension: 0.4,
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a2340', borderColor: 'rgba(99,102,241,0.3)', borderWidth: 1, titleColor: '#f1f5f9', bodyColor: '#94a3b8' } },
+                scales: {
+                    x: { grid: { color: gridColor }, ticks: { color: labelColor, font: { size: 11 } } },
+                    y: { grid: { color: gridColor }, ticks: { color: labelColor, font: { size: 11 } }, beginAtZero: true },
+                }
+            }
+        });
+
+        // Donut Chart
+        const donutCtx = document.getElementById('donutChart').getContext('2d');
+        const donutColors = ['#6366f1', '#a855f7', '#06b6d4', '#10b981', '#f59e0b'];
+        const donutLabels = ['Projects', 'Skills', 'Experience', 'Education', 'Media'];
+        const donutData = [projects.length, skillCount, CMS.get('experience').length, CMS.get('education').length, CMS.get('media').length];
+
+        new Chart(donutCtx, {
+            type: 'doughnut',
+            data: {
+                labels: donutLabels,
+                datasets: [{ data: donutData, backgroundColor: donutColors, borderWidth: 0, hoverOffset: 6 }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '72%',
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Donut legend
+        const legend = document.getElementById('donutLegend');
+        donutLabels.forEach((l, i) => {
+            legend.innerHTML += `<div style="display:flex;align-items:center;gap:8px;font-size:13px">
+      <span style="width:10px;height:10px;border-radius:50%;background:${donutColors[i]};flex-shrink:0"></span>
+      <span style="color:var(--text-secondary);flex:1">${l}</span>
+      <span style="font-weight:700;color:var(--text-primary)">${donutData[i]}</span>
+    </div>`;
+        });
+
+        // Recent Projects
+        const recentProjects = projects.slice(0, 4);
+        const statusColors = { Published: 'badge-green', Draft: 'badge-yellow', Archived: 'badge-gray' };
+        document.getElementById('recentProjects').innerHTML = `
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Project</th><th>Category</th><th>Status</th></tr></thead>
+        <tbody>
+          ${recentProjects.map(p => `
+            <tr>
+              <td><strong>${escapeHtml(p.title)}</strong></td>
+              <td><span class="td-muted">${p.category}</span></td>
+              <td><span class="badge ${statusColors[p.status] || 'badge-gray'}">${p.status}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+        // Activity Feed
+        const activities = [
+            { icon: '📁', color: 'rgba(99,102,241,0.15)', text: '<strong>AI Resume Builder</strong> project was updated', time: '2h ago' },
+            { icon: '💬', color: 'rgba(239,68,68,0.15)', text: 'New message from <strong>Sarah Johnson</strong>', time: '4h ago' },
+            { icon: '⚡', color: 'rgba(168,85,247,0.15)', text: '<strong>React</strong> skill proficiency updated to 95%', time: '1d ago' },
+            { icon: '👤', color: 'rgba(16,185,129,0.15)', text: 'New user <strong>Editor User</strong> added', time: '2d ago' },
+            { icon: '🖼️', color: 'rgba(6,182,212,0.15)', text: '<strong>hero-bg.webp</strong> uploaded to Media', time: '3d ago' },
+        ];
+        document.getElementById('activityFeed').innerHTML = activities.map(a => `
+    <div class="activity-item">
+      <div class="activity-dot" style="background:${a.color}">${a.icon}</div>
+      <div class="activity-body">
+        <div class="activity-text">${a.text}</div>
+        <div class="activity-time">${a.time}</div>
+      </div>
+    </div>
+  `).join('');
+
+        function escapeHtml(s) {
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+    </script>
+
+    <style>
+        .sidebar-overlay.active {
+            display: block !important;
+        }
+
+        @media(max-width:768px) {
+            #mobileSidebarBtn {
+                display: flex !important
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0)
+            }
+        }
+    </style>
+</body>
+
+</html>

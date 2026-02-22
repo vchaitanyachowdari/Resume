@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — VC Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+</head>
+
+<body>
+    <div class="admin-shell">
+        <!-- SIDEBAR (shared) -->
+        <div id="sidebarMount"></div>
+
+        <div class="main-wrapper">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-btn" style="display:none" id="mobileSidebarBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div>
+                        <h2 class="page-title">Projects</h2>
+                        <div class="breadcrumb">Dashboard <span>›</span> Projects</div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" id="themeToggle"><span class="theme-icon">☀️</span></button>
+                    <div class="topbar-user" data-dropdown="topUserDrop" style="position:relative">
+                        <div class="user-avatar" style="width:30px;height:30px;font-size:12px"><span
+                                class="user-initials">VC</span></div>
+                        <span class="topbar-user-name user-display-name">V Chaitanya</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <div class="dropdown-menu" id="topUserDrop">
+                            <div class="dropdown-item" onclick="location.href='settings.html'">⚙️ Settings</div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item danger" data-logout>🚪 Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Projects Manager</h1>
+                        <p>Add, edit and manage your portfolio projects</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button class="btn btn-primary" onclick="openAddModal()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                            Add Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar">
+                    <div class="search-input-wrapper">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search projects..." />
+                    </div>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option>AI/ML</option>
+                        <option>Full Stack</option>
+                        <option>DevOps</option>
+                        <option>Data</option>
+                        <option>Mobile</option>
+                    </select>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option>Published</option>
+                        <option>Draft</option>
+                        <option>Archived</option>
+                    </select>
+                </div>
+
+                <!-- Table -->
+                <div class="card" style="padding:0;overflow:hidden">
+                    <div class="table-wrapper">
+                        <table id="projectsTable">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Category</th>
+                                    <th>Tech Stack</th>
+                                    <th>Status</th>
+                                    <th>Views</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectsTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ADD / EDIT MODAL -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal" style="max-width:620px">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Add Project</h3>
+                <button class="modal-close" onclick="Modal.hide('projectModal')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm">
+                    <input type="hidden" id="projectId" />
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Project Title *</label>
+                            <input type="text" class="form-input" id="pTitle" placeholder="e.g. AI Resume Builder"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select class="form-select" id="pCategory">
+                                <option>AI/ML</option>
+                                <option>Full Stack</option>
+                                <option>DevOps</option>
+                                <option>Data</option>
+                                <option>Mobile</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description *</label>
+                        <textarea class="form-textarea" id="pDesc" placeholder="Describe the project..."
+                            rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tech Stack (comma separated)</label>
+                        <input type="text" class="form-input" id="pTech" placeholder="React, Node.js, PostgreSQL" />
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Live URL</label>
+                            <input type="url" class="form-input" id="pLiveUrl" placeholder="https://example.com" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">GitHub URL</label>
+                            <input type="url" class="form-input" id="pGithubUrl" placeholder="https://github.com/..." />
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" id="pStatus">
+                                <option>Published</option>
+                                <option>Draft</option>
+                                <option>Archived</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" id="pDate" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image URL</label>
+                        <input type="url" class="form-input" id="pImage" placeholder="https://..." />
+                    </div>
+                    <div class="form-group" style="display:flex;align-items:center;gap:12px">
+                        <label class="toggle-switch" for="pFeatured">
+                            <div class="toggle-track" id="featuredTrack">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </label>
+                        <span style="font-size:13px;color:var(--text-secondary)">Featured Project</span>
+                        <input type="checkbox" id="pFeatured" style="display:none" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('projectModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM DELETE -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal modal-sm">
+            <div class="modal-body" style="text-align:center;padding-top:32px">
+                <div class="confirm-icon">🗑️</div>
+                <div class="confirm-title">Delete Project?</div>
+                <p class="confirm-text">This action cannot be undone. The project will be permanently removed.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="Modal.hide('confirmModal')">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script>
+        Auth.requireAuth('../login.html');
+        initPage();
+
+        const statusColors = { Published: 'badge-green', Draft: 'badge-yellow', Archived: 'badge-gray' };
+        let editingId = null;
+        let deleteId = null;
+
+        // Render table
+        function renderTable(data) {
+            const tbody = document.getElementById('projectsTbody');
+            if (!data.length) {
+                tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📁</div><div class="empty-title">No projects found</div><div class="empty-text">Add your first project to get started</div></div></td></tr>`;
+                return;
+            }
+            tbody.innerHTML = data.map(p => `
+      <tr>
+        <td>
+          <div style="font-weight:600;color:var(--text-primary)">${escapeHtml(p.title)}</div>
+          ${p.featured ? '<span class="badge badge-indigo" style="margin-top:4px;font-size:10px">⭐ Featured</span>' : ''}
+        </td>
+        <td><span class="badge badge-purple">${p.category}</span></td>
+        <td>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;max-width:180px">
+            ${(p.tech || []).slice(0, 3).map(t => `<span class="badge badge-gray">${t}</span>`).join('')}
+            ${p.tech && p.tech.length > 3 ? `<span class="badge badge-gray">+${p.tech.length - 3}</span>` : ''}
+          </div>
+        </td>
+        <td><span class="badge ${statusColors[p.status] || 'badge-gray'}"><span class="dot"></span>${p.status}</span></td>
+        <td class="td-muted">${(p.views || 0).toLocaleString()}</td>
+        <td class="td-muted">${formatDate(p.date)}</td>
+        <td>
+          <div class="td-actions">
+            ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" class="btn btn-ghost btn-icon btn-sm" title="View Live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>` : ''}
+            <button class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="openEditModal(${p.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="btn btn-danger btn-icon btn-sm" title="Delete" onclick="confirmDelete(${p.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+        }
+
+        // Initial render
+        renderTable(CMS.get('projects'));
+
+        // Filtering
+        function filterProjects() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const cat = document.getElementById('categoryFilter').value;
+            const stat = document.getElementById('statusFilter').value;
+            let data = CMS.get('projects');
+            if (q) data = data.filter(p => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q));
+            if (cat) data = data.filter(p => p.category === cat);
+            if (stat) data = data.filter(p => p.status === stat);
+            renderTable(data);
+        }
+        document.getElementById('searchInput').addEventListener('input', filterProjects);
+        document.getElementById('categoryFilter').addEventListener('change', filterProjects);
+        document.getElementById('statusFilter').addEventListener('change', filterProjects);
+
+        // Featured toggle
+        const featuredTrack = document.getElementById('featuredTrack');
+        const featuredInput = document.getElementById('pFeatured');
+        featuredTrack.addEventListener('click', () => {
+            featuredInput.checked = !featuredInput.checked;
+            featuredTrack.classList.toggle('on', featuredInput.checked);
+        });
+
+        // Open Add Modal
+        function openAddModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = 'Add Project';
+            document.getElementById('projectForm').reset();
+            featuredTrack.classList.remove('on');
+            document.getElementById('pDate').value = new Date().toISOString().split('T')[0];
+            Modal.show('projectModal');
+        }
+
+        // Open Edit Modal
+        function openEditModal(id) {
+            const projects = CMS.get('projects');
+            const p = projects.find(x => x.id === id);
+            if (!p) return;
+            editingId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Project';
+            document.getElementById('projectId').value = p.id;
+            document.getElementById('pTitle').value = p.title;
+            document.getElementById('pCategory').value = p.category;
+            document.getElementById('pDesc').value = p.description;
+            document.getElementById('pTech').value = (p.tech || []).join(', ');
+            document.getElementById('pLiveUrl').value = p.liveUrl || '';
+            document.getElementById('pGithubUrl').value = p.githubUrl || '';
+            document.getElementById('pStatus').value = p.status;
+            document.getElementById('pDate').value = p.date || '';
+            document.getElementById('pImage').value = p.image || '';
+            featuredInput.checked = p.featured || false;
+            featuredTrack.classList.toggle('on', p.featured || false);
+            Modal.show('projectModal');
+        }
+
+        // Save
+        function saveProject() {
+            const title = document.getElementById('pTitle').value.trim();
+            if (!title) { Toast.error('Project title is required'); return; }
+            const data = {
+                title,
+                category: document.getElementById('pCategory').value,
+                description: document.getElementById('pDesc').value.trim(),
+                tech: document.getElementById('pTech').value.split(',').map(s => s.trim()).filter(Boolean),
+                liveUrl: document.getElementById('pLiveUrl').value.trim(),
+                githubUrl: document.getElementById('pGithubUrl').value.trim(),
+                status: document.getElementById('pStatus').value,
+                date: document.getElementById('pDate').value,
+                image: document.getElementById('pImage').value.trim(),
+                featured: featuredInput.checked,
+            };
+            if (editingId) {
+                CMS.update('projects', editingId, data);
+                Toast.success('Project updated successfully');
+            } else {
+                data.views = 0;
+                CMS.add('projects', data);
+                Toast.success('Project added successfully');
+            }
+            Modal.hide('projectModal');
+            renderTable(CMS.get('projects'));
+        }
+
+        // Delete
+        function confirmDelete(id) {
+            deleteId = id;
+            Modal.show('confirmModal');
+        }
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            if (deleteId) {
+                CMS.remove('projects', deleteId);
+                Modal.hide('confirmModal');
+                Toast.success('Project deleted');
+                filterProjects();
+            }
+        });
+
+        function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    </script>
+</body>
+
+</html>
