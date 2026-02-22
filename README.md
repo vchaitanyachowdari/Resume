@@ -1,14 +1,187 @@
-# Personal Resume Website
+# Personal Resume Website - React + Vite + TypeScript
 
-This is a personal resume website for V Chaitanya Chowdari, showcasing his skills, experience, and projects.
+Modern personal resume website for V Chaitanya Chowdari, built with React, Vite, and TypeScript. This application showcases skills, experience, projects, and professional background with a focus on AI, automation, and full-stack development.
 
 <img width="1470" height="800" alt="Screenshot 2025-09-20 at 7 14 12 PM" src="https://github.com/user-attachments/assets/966cce0a-fe79-4298-b0fa-8892224acd71" />
 
-## Project Overview
+## 🚀 Quick Start
 
-The website is a static site built with HTML and CSS. It is designed to be a clean, modern, and professional online resume with comprehensive SEO optimization for maximum search engine visibility and social sharing effectiveness.
+### Prerequisites
 
-## Features
+- Node.js 18.x or higher
+- npm 9.x or higher
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+The development server will start at `http://localhost:5173/`
+
+## 📁 Project Structure
+
+```
+├── public/              # Static assets (favicon, manifest, robots.txt, sitemap.xml)
+│   ├── robots.txt      # Search engine crawling rules
+│   ├── sitemap.xml     # Auto-generated sitemap (build)
+│   ├── og-image.png    # Open Graph social sharing image
+│   └── site.webmanifest # PWA manifest
+├── src/
+│   ├── assets/         # Dynamic assets (fonts, images)
+│   │   ├── fonts/      # Proxima Nova font family
+│   │   └── images/     # Profile images and logos
+│   ├── components/     # Reusable React components
+│   │   ├── icons/      # Icon barrel exports (react-icons)
+│   │   └── SEO/        # SEO meta tags component
+│   ├── context/        # React Context providers
+│   │   └── ThemeContext.tsx # Dark/light theme management
+│   ├── data/           # Data models and constants
+│   │   ├── profile.ts  # Personal information
+│   │   ├── seoData.ts  # Section-specific SEO metadata
+│   │   ├── experience.ts  # Work experience data
+│   │   ├── skills.ts   # Technical and soft skills
+│   │   ├── education.ts   # Educational background
+│   │   └── projects.ts # Portfolio projects
+│   ├── hooks/          # Custom React hooks
+│   ├── sections/       # Page sections (Hero, Experience, Projects, etc.)
+│   ├── styles/         # Global styles and design tokens
+│   │   ├── fonts.css   # @font-face declarations
+│   │   ├── tokens.css  # Design tokens and theme variables
+│   │   └── global.css  # CSS custom properties and resets
+│   ├── test/           # Test setup and utilities
+│   │   ├── setup.ts    # Vitest setup and global mocks
+│   │   └── test-utils.tsx # Custom render with providers
+│   ├── utils/          # Utility functions
+│   │   └── structuredData.ts # JSON-LD schema generators
+│   ├── App.tsx         # Main application component
+│   ├── main.tsx        # Application entry point
+│   └── vite-env.d.ts   # Vite TypeScript declarations
+├── e2e/                # End-to-end tests
+│   ├── routing.spec.ts # Navigation and routing tests
+│   ├── contact-form.spec.ts # Form submission tests
+│   └── theme-persistence.spec.ts # Theme toggle tests
+├── scripts/            # Build scripts
+│   └── generate-sitemap.js # Sitemap generation script
+├── index.html          # HTML entry point
+├── vite.config.ts      # Vite configuration with path aliases
+├── vitest.config.ts    # Vitest test configuration
+├── playwright.config.ts # Playwright E2E test configuration
+├── vite-plugin-sitemap.ts # Custom Vite plugin for sitemap
+├── tsconfig.json       # TypeScript configuration
+├── eslint.config.js    # ESLint configuration
+├── .prettierrc         # Prettier configuration
+├── SEO_IMPLEMENTATION.md # SEO documentation
+├── PWA_ANALYTICS_DOCUMENTATION.md # PWA & Analytics documentation
+└── package.json        # Dependencies and scripts
+```
+
+## 🛠️ Technology Stack
+
+### Core Framework
+
+- **React 18.3** - UI library with hooks and concurrent features
+- **TypeScript 5.6** - Type-safe JavaScript
+- **Vite 6.0** - Fast build tool with HMR
+
+### Routing & State Management
+
+- **React Router DOM 7.1** - Client-side routing
+- **@tanstack/react-query 5.62** - Server state management (ready for API integration)
+- **React Context** - Global state management
+
+### UI & Animation
+
+- **Framer Motion 11.15** - Production-ready animation library
+- **React Icons 5.4** - Tree-shakeable icon library (replacing Font Awesome CDN)
+- **CSS Modules** - Scoped component styles
+- **PostCSS + Autoprefixer** - CSS processing and vendor prefixes
+
+### Forms & Validation
+
+- **React Hook Form 7.54** - Performant form library
+- **Zod 3.24** - TypeScript-first schema validation
+
+### Meta Tags & SEO
+
+- **React Helmet Async 2.0** - Manage document head (title, meta tags, etc.)
+
+### PWA & Analytics
+
+- **vite-plugin-pwa** - Progressive Web App support with Workbox
+- **workbox-window** - Service worker management
+- **Google Analytics 4** - Privacy-respecting analytics with DNT support
+
+### Code Quality
+
+- **ESLint 9.17** - Linting with React/TypeScript rules
+- **Prettier 3.4** - Code formatting
+- **Husky 9.1** - Git hooks
+- **lint-staged 15.3** - Pre-commit linting
+
+### Testing
+
+- **Vitest 4.0** - Unit and integration testing (Jest-compatible API)
+- **@testing-library/react 16.3** - React component testing
+- **@testing-library/jest-dom 6.9** - Custom matchers for DOM nodes
+- **@testing-library/user-event 14.6** - User interaction simulation
+- **Playwright 1.56** - End-to-end testing across browsers
+- **@vitest/ui** - Interactive test UI
+
+## 🧪 Testing
+
+This project includes comprehensive testing coverage for critical components and workflows.
+
+### Unit & Integration Tests
+
+Unit tests are written using **Vitest** with **React Testing Library**, covering:
+
+- **HeroSection** - Rendering, social links, download tracking, accessibility
+- **SectionNav** - Navigation items, routing, active states, keyboard accessibility
+- **ContactForm** - Form validation, submission, error handling, accessibility
+- **ThemeToggle** - Theme switching, persistence, keyboard navigation
+
+```bash
+# Run tests in watch mode
+npm run test
+
+# Run tests once
+npm run test:run
+
+# View test UI
+npm run test:ui
+
+# Generate coverage report
+npm run test:coverage
+```
+
+**Coverage Thresholds:**
+- Lines: 60%
+- Functions: 60%
+- Branches: 60%
+- Statements: 60%
+
+Tests are located in `__tests__` directories next to the components they test:
+```
+src/
+  components/
+    __tests__/
+      ContactForm.test.tsx
+      ThemeToggle.test.tsx
+  sections/
+    __tests__/
+      HeroSection.test.tsx
+```
 
 *   **Responsive Design:** The website is fully responsive and works on all devices, from mobile phones to desktops.
 *   **Modern UI/UX:** The website has a clean and modern design, with a focus on readability and user experience.
@@ -224,3 +397,25 @@ Use these tools to validate your SEO implementation:
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+## 👤 Author
+
+**V Chaitanya Chowdari**  
+AI Generalist | AI Automation Expert | AI Agents Builder
+
+- 🌐 Portfolio: [chowdari.in](https://www.chowdari.in)
+- 💼 LinkedIn: [v-chaitanya-chowdari](https://www.linkedin.com/in/v-chaitanya-chowdari-bb3733202)
+- 🐙 GitHub: [vchaitanyachowdari](https://github.com/vchaitanyachowdari)
+- 🐦 Twitter: [@vchaitanyachai](https://x.com/vchaitanyachai)
+- 📧 Email: vchaitanya@chowdari.in
+
+---
+
+**Note**: This is the initial React foundation setup. Future development will include:
+
+- Component implementation for all resume sections
+- Page routing and navigation
+- Animations with Framer Motion
+- Contact form with validation
+- Dark mode theme toggle
+- Performance optimizations
